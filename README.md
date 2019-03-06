@@ -1,6 +1,10 @@
-# hn
+# [hn](https://github.com/cevaris/hn)
 
-Example
+
+Resources
+- [HackerNews Firebase API](https://github.com/HackerNews/API)
+
+Similar
 - [hn PWA](https://github.com/codediodeio/hnpwa-angular5)
 
 Dependencies

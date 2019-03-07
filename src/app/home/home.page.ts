@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { HnDatastore } from '../datastore/hn.datastore.page';
+import { HnDatastore, Updates } from '../datastore/hn.datastore.page';
+import { config } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,8 @@ export class HomePage {
     private datastore: HnDatastore
   ) {
     this.datastore.getUpdates()
-      .subscribe(res => console.log('updates', res));
+      .subscribe(res => 
+        console.log('update', res.items, res.profiles)
+      );
   }
 }

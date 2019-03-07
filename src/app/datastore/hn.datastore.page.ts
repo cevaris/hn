@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Observable } from 'rxjs';
+
+export interface Updates {
+  items: number[];
+  profiles: string[];
+}
 
 @Injectable()
 export class HnDatastore {
@@ -9,38 +14,38 @@ export class HnDatastore {
     private client: AngularFireDatabase
   ) { }
 
-  getUpdates(): Observable<any> {
-    return this.client.list<any>('/v0/updates')
+  getUpdates(): Observable<Updates> {
+    return this.client.object<Updates>('/v0/updates')
       .valueChanges();
   }
 
-  getAskStories(): Observable<number[]> {
-    return this.client.list<any>('/v0/askstories')
+  getAskStories(): Observable<number[][]> {
+    return this.client.list<number[]>('/v0/askstories')
       .valueChanges();
   }
 
-  getShowStories(): Observable<number[]> {
-    return this.client.list<any>('/v0/showstories')
+  getShowStories(): Observable<number[][]> {
+    return this.client.list<number[]>('/v0/showstories')
       .valueChanges();
   }
 
-  getJobStories(): Observable<number[]> {
-    return this.client.list<any>('/v0/jobstories')
+  getJobStories(): Observable<number[][]> {
+    return this.client.list<number[]>('/v0/jobstories')
       .valueChanges();
   }
 
-  getTopStories(): Observable<number[]> {
-    return this.client.list<any>('/v0/topstories')
+  getTopStories(): Observable<number[][]> {
+    return this.client.list<number[]>('/v0/topstories')
       .valueChanges();
   }
 
-  getNewStories(): Observable<number[]> {
-    return this.client.list<any>('/v0/newstories')
+  getNewStories(): Observable<number[][]> {
+    return this.client.list<number[]>('/v0/newstories')
       .valueChanges();
   }
 
-  getMaxitemId(): Observable<number[]> {
-    return this.client.list<any>('/v0/maxitem')
+  getMaxitemId(): Observable<number[][]> {
+    return this.client.list<number[]>('/v0/maxitem')
       .valueChanges();
   }
 

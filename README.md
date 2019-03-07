@@ -20,3 +20,6 @@ Web browser development
 
 `ionic serve --no-open`
 
+
+## Example
+- Login with goto comment/item: https://news.ycombinator.com/login?goto=item%3Fid%3D19327939

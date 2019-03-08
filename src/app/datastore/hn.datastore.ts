@@ -10,6 +10,24 @@ export interface Updates {
   profiles: string[];
 }
 
+export interface Item {
+  id: number;
+  deleted: boolean;
+  type: string;
+  by: string; // author username
+  time: number;
+  text: string; // html 
+  dead: true; // unsure what dead means
+  parent: number; // itemId of parent comment or root story
+  kids: number[]; // comments, ranked display order
+  url: string; // story url
+  title: string; 
+  descendants: number; // total comments
+  parts: number[]; // list of pollopt itemIds of a poll
+  score: number; // score o poll
+  poll: number; // itemId of parent poll
+}
+
 @Injectable()
 export class HnDatastore {
   constructor(
@@ -62,7 +80,9 @@ export class HnDatastore {
   // -- cachedAt, value (json), and title (for searching)
   // TODO: Create class for User/Item, with cache helper key
   // TODO: Move storage to another underlying client, just expose get/set/forEach
-  getItem(id: number): Observable<any> {
+  // -- https://blog.fullstacktraining.com/caching-http-requests-with-angular/
+  // TODO: Dabble in caching observable, and tap'ing title -> id into persistance
+  getItem(id: number): Observable<Item> {
     const res = defer(() =>
       this.storage
         .ready()
@@ -79,7 +99,7 @@ export class HnDatastore {
         if (result) {
           return of(result);
         } else {
-          return this.client.object<any>(`/v0/item/${id}`)
+          return this.client.object<Item>(`/v0/item/${id}`)
             .valueChanges().pipe(
               tap(hydratedValue => this.storage.set(`user:${id}`, hydratedValue))
             );

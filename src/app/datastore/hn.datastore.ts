@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Storage } from '@ionic/storage';
 import { defer, Observable, of } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { mergeMap, tap } from 'rxjs/operators';
 
 
 export interface Updates {
@@ -57,6 +57,11 @@ export class HnDatastore {
       .valueChanges();
   }
 
+
+  // TODO: Create cache wrapper to save 
+  // -- cachedAt, value (json), and title (for searching)
+  // TODO: Create class for User/Item, with cache helper key
+  // TODO: Move storage to another underlying client, just expose get/set/forEach
   getItem(id: number): Observable<any> {
     const res = defer(() =>
       this.storage
@@ -76,10 +81,7 @@ export class HnDatastore {
         } else {
           return this.client.object<any>(`/v0/item/${id}`)
             .valueChanges().pipe(
-              mergeMap(hydratedValue => {
-                this.storage.set(`user:${id}`, hydratedValue);
-                return of(hydratedValue);
-              })
+              tap(hydratedValue => this.storage.set(`user:${id}`, hydratedValue))
             );
         }
       })

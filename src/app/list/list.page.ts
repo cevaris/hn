@@ -24,7 +24,7 @@ export class ListPage implements OnInit {
   public items: Array<{ title: string; note: string; icon: string }> = [];
 
   constructor(private datastore: HnDatastore) {
-    this.datastore.getItem(19333600)
+    this.datastore.getItem(19333402)
       .subscribe(res => {
         console.log('subscribed', res);
       });

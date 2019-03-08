@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { HnDatastore } from './hn.datastore.page';
+import { HnDatastore } from './hn.datastore';
 import { CommonModule } from '@angular/common';
 
 @NgModule({

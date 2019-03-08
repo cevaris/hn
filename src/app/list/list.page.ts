@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HnDatastore } from '../datastore/hn.datastore.page';
+import { HnDatastore } from '../datastore/hn.datastore';
 
 @Component({
   selector: 'app-list',

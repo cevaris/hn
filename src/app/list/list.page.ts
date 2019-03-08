@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HnDatastore } from '../datastore/hn.datastore';
+import { Observable, from } from 'rxjs';
+import { map, mergeMap, flatMap } from 'rxjs/operators';
+import { HnDatastore, Item } from '../datastore/hn.datastore';
 
 @Component({
   selector: 'app-list',
@@ -21,29 +23,41 @@ export class ListPage implements OnInit {
     'build'
   ];
 
-  public items: Array<{ title: string; note: string; icon: string }> = [];
+  public items: Item[];
+  topStories: Observable<number[]>;
 
-  constructor(private datastore: HnDatastore) {
-    this.datastore.getItem(19333402)
-      .subscribe(res => {
-        console.log('subscribed', res);
-      });
-
-    this.datastore.getUpdates()
-      .subscribe(res => {
-        console.log('update', res.items, res.profiles)
-        this.items = [];
-        res.items.forEach(itemId => {
-          this.items.push({
-            title: `Item: ${itemId}`,
-            note: '',
-            icon: this.icons[itemId % this.icons.length]
-          })
-        });
-      });
-  }
+  constructor(private datastore: HnDatastore) { }
 
   ngOnInit() {
+    this.datastore.getItem(19333402)
+      .subscribe(res => {
+        console.log('getItem', res);
+      });
+
+    this.datastore.getUser('cevaris')
+      .subscribe(res => {
+        console.log('getUser', res);
+      });
+
+    this.items = [];
+    this.topStories = this.datastore.getTopStories();
+    this.topStories
+      .pipe(
+        flatMap(itemIds => {
+          return itemIds.slice(0, 30);
+        }),
+        mergeMap(itemId => {
+          return <Observable<Item>>this.datastore.getItem(itemId);
+        })
+      )
+      .subscribe(items => {
+        this.items.push(items);
+        // reorder because mergeMap executes in parellel
+        this.items.sort((a, b) => {
+            if(a.id < b.id) return -1;
+            if(a.id > b.id) return 1;
+        });
+      });
   }
   // add back when alpha.4 is out
   // navigate(item) {

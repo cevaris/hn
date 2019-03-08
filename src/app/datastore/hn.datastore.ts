@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Storage } from '@ionic/storage';
 import { defer, Observable, of } from 'rxjs';
-import { mergeMap, tap } from 'rxjs/operators';
+import { mergeMap, tap, flatMap } from 'rxjs/operators';
 
 
 export interface Updates {
@@ -15,17 +15,25 @@ export interface Item {
   deleted: boolean;
   type: string;
   by: string; // author username
-  time: number;
+  time: number; // epoch timestamp
   text: string; // html 
   dead: true; // unsure what dead means
   parent: number; // itemId of parent comment or root story
   kids: number[]; // comments, ranked display order
   url: string; // story url
-  title: string; 
+  title: string;
   descendants: number; // total comments
   parts: number[]; // list of pollopt itemIds of a poll
   score: number; // score o poll
   poll: number; // itemId of parent poll
+}
+
+export interface User {
+  id: number;
+  delay: number; // no clue what this is
+  created: number; // epoch timestamp
+  karma: number;
+  submitted: number[]; // list of itemId comments/stories submitted
 }
 
 @Injectable()
@@ -55,8 +63,8 @@ export class HnDatastore {
       .valueChanges();
   }
 
-  getTopStories(): Observable<number[][]> {
-    return this.client.list<number[]>('/v0/topstories')
+  getTopStories(): Observable<number[]> {
+    return this.client.list<number>('/v0/topstories')
       .valueChanges();
   }
 
@@ -70,8 +78,8 @@ export class HnDatastore {
       .valueChanges();
   }
 
-  getUser(id: string): Observable<any> {
-    return this.client.list<any>(`/v0/user/${id}`)
+  getUser(id: string): Observable<User> {
+    return this.client.object<User>(`/v0/user/${id}`)
       .valueChanges();
   }
 
@@ -95,12 +103,14 @@ export class HnDatastore {
         }));
 
     return res.pipe(
-      mergeMap(result => {
+      flatMap(result => {
         if (result) {
           return of(result);
         } else {
+          console.log('not found from cache, hydrating', id);
           return this.client.object<Item>(`/v0/item/${id}`)
-            .valueChanges().pipe(
+            .valueChanges()
+            .pipe(
               tap(hydratedValue => this.storage.set(`user:${id}`, hydratedValue))
             );
         }

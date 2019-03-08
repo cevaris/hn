@@ -7,6 +7,7 @@
 - [Injectable Interfaces](https://github.com/mgmarlow/Creating-Interfaces-Angular-Services/blob/master/src/app/services/todo-list.service.ts)
 - [SQLite Android/iOS](https://ionicframework.com/docs/native/sqlite)
 - [SQLite - All platforms](https://github.com/xpbrew/cordova-sqlite-storage)
+- [ForkJoin/MergeMap/ConcatMap](https://blog.angularindepth.com/practical-rxjs-in-the-wild-requests-with-concatmap-vs-mergemap-vs-forkjoin-11e5b2efe293)
 
 ## Similar
 - [hn PWA](https://github.com/codediodeio/hnpwa-angular5)

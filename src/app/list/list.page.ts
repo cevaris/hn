@@ -20,10 +20,14 @@ export class ListPage implements OnInit {
     'bluetooth',
     'build'
   ];
-  
+
   public items: Array<{ title: string; note: string; icon: string }> = [];
-  
+
   constructor(private datastore: HnDatastore) {
+    this.datastore.getItem(19333600)
+      .subscribe(res => {
+        console.log('subscribed', res);
+      });
 
     this.datastore.getUpdates()
       .subscribe(res => {

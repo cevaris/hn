@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
-import { Observable } from 'rxjs';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { Storage } from '@ionic/storage';
+import { defer, Observable, of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+
 
 export interface Updates {
   items: number[];
@@ -9,9 +12,9 @@ export interface Updates {
 
 @Injectable()
 export class HnDatastore {
-
   constructor(
-    private client: AngularFireDatabase
+    private client: AngularFireDatabase,
+    private storage: Storage
   ) { }
 
   getUpdates(): Observable<Updates> {
@@ -54,9 +57,33 @@ export class HnDatastore {
       .valueChanges();
   }
 
-  getItem(id: string): Observable<any> {
-    return this.client.list<any>(`/v0/item/${id}`)
-      .valueChanges();
+  getItem(id: number): Observable<any> {
+    const res = defer(() =>
+      this.storage
+        .ready()
+        .then(() => {
+          return this.storage.get(`user:${id}`)
+            .then((item) => {
+              console.log('found from cache', item);
+              return item;
+            });
+        }));
+
+    return res.pipe(
+      mergeMap(result => {
+        if (result) {
+          return of(result);
+        } else {
+          return this.client.object<any>(`/v0/item/${id}`)
+            .valueChanges().pipe(
+              mergeMap(hydratedValue => {
+                this.storage.set(`user:${id}`, hydratedValue);
+                return of(hydratedValue);
+              })
+            );
+        }
+      })
+    )
   }
 
 }

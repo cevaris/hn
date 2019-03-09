@@ -10,6 +10,27 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-list>
+    <ion-item *ngFor="let item of items | async">
+      {{item}}
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <!-- <ion-virtual-scroll [items]="items | async" approxItemHeight="320px">
+    <ion-card *virtualItem="let item; let itemBounds = bounds;">
+      <ion-card-header>
+        <ion-card-title>{{ item }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>{{ item }}</ion-card-content>
+    </ion-card>
+  </ion-virtual-scroll> -->
+
   <!-- <ion-list [virtualScroll]="items" [approxItemHeight]="'50px'">
       <ion-card *virtualItem="let item">
 
@@ -24,12 +45,11 @@
       </ion-card>
     </ion-list> -->
 
-  <ion-list>
+  <!-- <ion-list>
     <ion-item *ngFor="let item of items | async">
-      <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
       {{item}}
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 
   <!--
     <div *ngIf="selectedItem" padding>

@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable, from, Subscription, of, BehaviorSubject, zip } from 'rxjs';
-import { map, mergeMap, flatMap, switchMap, tap } from 'rxjs/operators';
-import { HnDatastore, Item } from '../datastore/hn.datastore';
 import { IonInfiniteScroll } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { HnDatastore } from '../datastore/hn.datastore';
 
 @Component({
   selector: 'app-list',
@@ -13,13 +12,14 @@ export class ListPage implements OnInit {
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
-  feed: Observable<number[]>;
+  feed: number[];
+  lastPage: number;
+  currPage: number = 1;
+
   items: Observable<number[]>;
 
-  pages: Observable<number>;
-  currPage: BehaviorSubject<number>;
-
-  constructor(private datastore: HnDatastore) { }
+  constructor(private datastore: HnDatastore) { 
+  }
 
   ngOnInit() {
     this.datastore.getItem(19333402)
@@ -32,50 +32,29 @@ export class ListPage implements OnInit {
         console.log('getUser', res);
       });
 
-    this.feed = this.datastore.getTopStories();
-    this.pages = this.feed.pipe(
-      map(arr => Math.floor(arr.length / 30) + 1)
-    );
-    // kick off first page load
-    this.currPage = new BehaviorSubject(0);
-    this.currPage
-    .pipe(
-      switchMap(page => {
-        console.log('currPage', page);
-        return this.feed.pipe(
-          map(itemIds => {
-            const nextIds = itemIds.slice((page - 1) * 30, (page - 1) * 30 + 30);
-            console.log('nextIds', nextIds);
-            return nextIds;
-          })
-        )
-      })
-    );
-    this.currPage.next(1);
-    // this.items = this.feed
-    //   .pipe(
-    //     map(itemIds => {
-    //       console.log('slicing page');
-    //       return itemIds.slice(0, 30);
-    //     })
-    //   )
+    this.datastore.getTopStories()
+      .subscribe(results => {
+        this.feed = results;
+        this.lastPage = Math.floor(this.feed.length / 30) + 1;
+        console.log('feed', this.feed);
+        console.log('lastPage', this.lastPage);
+        this.infiniteScroll.disabled = false;
+      });
   }
 
   loadData(event) {
     console.log('loadData fired', event);
     setTimeout(() => {
-      this.currPage
-        .next(this.currPage.value + 1);
+      const nextIds = this.feed.slice((this.currPage - 1) * 30, (this.currPage - 1) * 30 + 30);
+      console.log('done', 'nextIds', nextIds);
 
-      console.log('Done');
-      event.target.complete();
+      if (event) {
+        event.target.complete();
+      }
 
-      zip(this.pages, this.currPage)
-        .subscribe(([pages, currPage]) => {
-          if (currPage >= pages) {
-            event.target.disabled = true;
-          }
-        });
+      if (event && this.currPage >= this.lastPage) {
+        event.target.disabled = true;
+      }
     }, 500);
   }
 

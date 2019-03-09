@@ -1,8 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Storage } from '@ionic/storage';
 import { defer, Observable, of } from 'rxjs';
-import { flatMap, tap } from 'rxjs/operators';
+import { flatMap, tap, map } from 'rxjs/operators';
 
 
 export interface Updates {
@@ -36,11 +37,15 @@ export interface User {
   submitted: number[]; // list of itemId comments/stories submitted
 }
 
+export const HnBaseURL = 'https://hacker-news.firebaseio.com';
+const TopStoriesURL = `${HnBaseURL}/v0/topstories.json`;
+
 @Injectable()
 export class HnDatastore {
   constructor(
     private client: AngularFireDatabase,
-    private storage: Storage
+    private storage: Storage,
+    private http: HttpClient
   ) { }
 
   getUpdates(): Observable<Updates> {
@@ -63,18 +68,8 @@ export class HnDatastore {
       .valueChanges();
   }
 
-  // async getTopStories(): Promise<number[]> {
-  //   return this.client
-  //     .list<number>('/v0/topstories')
-  //     .query
-  //     .once('value')
-  //     .then(snapshot => snapshot.val())
-  // }
-
   getTopStories(): Observable<number[]> {
-    // return this.httpClient.get("")
-    return this.client.list<number>('/v0/topstories')
-      .valueChanges();
+    return this.http.get<number[]>(TopStoriesURL);
   }
 
   getNewStories(): Observable<number[][]> {

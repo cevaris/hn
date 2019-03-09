@@ -9,6 +9,7 @@
 - [SQLite - All platforms](https://github.com/xpbrew/cordova-sqlite-storage)
 - [ForkJoin/MergeMap/ConcatMap](https://blog.angularindepth.com/practical-rxjs-in-the-wild-requests-with-concatmap-vs-mergemap-vs-forkjoin-11e5b2efe293)
 - [NG Service worker](https://angularfirebase.com/lessons/hnpwa-angular-5-progressive-web-app-service-worker-tutorial/)
+- [HN Search!](https://hn.algolia.com/api)
 
 ## Similar
 - [hn PWA](https://github.com/codediodeio/hnpwa-angular5)

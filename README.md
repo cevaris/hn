@@ -11,6 +11,7 @@
 
 ## Similar
 - [hn PWA](https://github.com/codediodeio/hnpwa-angular5)
+- [Hakafaka](https://github.com/tomastrajan/ngx-model-hacker-news-example)
 
 ## Dependencies
 - [native firebase](https://ionicframework.com/docs/native/firebase/)

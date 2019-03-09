@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Storage } from '@ionic/storage';
 import { defer, Observable, of } from 'rxjs';
-import { mergeMap, tap, flatMap } from 'rxjs/operators';
+import { flatMap, tap } from 'rxjs/operators';
 
 
 export interface Updates {
@@ -63,7 +63,16 @@ export class HnDatastore {
       .valueChanges();
   }
 
+  // async getTopStories(): Promise<number[]> {
+  //   return this.client
+  //     .list<number>('/v0/topstories')
+  //     .query
+  //     .once('value')
+  //     .then(snapshot => snapshot.val())
+  // }
+
   getTopStories(): Observable<number[]> {
+    // return this.httpClient.get("")
     return this.client.list<number>('/v0/topstories')
       .valueChanges();
   }

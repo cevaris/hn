@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, from } from 'rxjs';
-import { map, mergeMap, flatMap } from 'rxjs/operators';
+import { Observable, from, Subscription, of } from 'rxjs';
+import { map, mergeMap, flatMap, switchMap } from 'rxjs/operators';
 import { HnDatastore, Item } from '../datastore/hn.datastore';
 
 @Component({
@@ -23,8 +23,8 @@ export class ListPage implements OnInit {
     'build'
   ];
 
-  public items: Item[];
-  topStories: Observable<number[]>;
+  feed: Observable<number[]>;
+  items: Observable<number[]>;
 
   constructor(private datastore: HnDatastore) { }
 
@@ -39,25 +39,33 @@ export class ListPage implements OnInit {
         console.log('getUser', res);
       });
 
-    this.items = [];
-    this.topStories = this.datastore.getTopStories();
-    this.topStories
+    this.feed = this.datastore.getTopStories();
+
+    this.items = this.feed
       .pipe(
-        flatMap(itemIds => {
+        map(itemIds => {
+          console.log('slicing page');
           return itemIds.slice(0, 30);
-        }),
-        mergeMap(itemId => {
-          return <Observable<Item>>this.datastore.getItem(itemId);
         })
+        // mergeMap(itemId => {
+        //   return <Observable<Item>>this.datastore.getItem(itemId);
+        // }),
+        // flatMap(itemIds => {
+        //   return itemIds.map(this.datastore.getItem;
+        // })
       )
-      .subscribe(items => {
-        this.items.push(items);
-        // reorder because mergeMap executes in parellel
-        this.items.sort((a, b) => {
-            if(a.id < b.id) return -1;
-            if(a.id > b.id) return 1;
-        });
-      });
+      // .subscribe(numbers => {
+      //   console.log('setting numbers');
+      //   this.items = numbers;
+      // })
+    // .subscribe(item => {
+    //   this.items.push(item);
+    //   // reorder because mergeMap executes in parellel
+    //   this.items.sort((a, b) => {
+    //     if (a.id < b.id) return -1;
+    //     if (a.id > b.id) return 1;
+    //   });
+    // });
   }
   // add back when alpha.4 is out
   // navigate(item) {

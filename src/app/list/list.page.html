@@ -10,12 +10,27 @@
 </ion-header>
 
 <ion-content>
+  <!-- <ion-list [virtualScroll]="items" [approxItemHeight]="'50px'">
+      <ion-card *virtualItem="let item">
+
+        <ion-item text-capitalize>
+          <h2>{{ item }}</h2>
+        </ion-item>
+
+        <ion-card-content>
+          {{ item }}
+        </ion-card-content>
+
+      </ion-card>
+    </ion-list> -->
+
   <ion-list>
-    <ion-item *ngFor="let item of items">
+    <ion-item *ngFor="let item of items | async">
       <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
-      {{item.title}}
+      {{item}}
     </ion-item>
   </ion-list>
+
   <!--
     <div *ngIf="selectedItem" padding>
       You navigated here from <b>{{selectedItem.title }}</b>

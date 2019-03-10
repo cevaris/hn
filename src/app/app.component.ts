@@ -9,12 +9,12 @@ import { Platform } from '@ionic/angular';
 })
 export class AppComponent {
   public appPages = [
-    { title: 'Top', url: '/feed/top', icon: 'list' },
-    { title: 'New', url: '/feed/new', icon: 'list' },
-    { title: 'Ask', url: '/feed/ask', icon: 'list' },
+    { title: 'Top', url: '/feed/top', icon: 'star' },
+    { title: 'New', url: '/feed/new', icon: 'flash' },
+    { title: 'Ask', url: '/feed/ask', icon: 'help' },
     { title: 'Show', url: '/feed/show', icon: 'list' },
-    { title: 'Jobs', url: '/feed/job', icon: 'list' },
-    { title: 'Best', url: '/feed/best', icon: 'list' },
+    { title: 'Jobs', url: '/feed/job', icon: 'briefcase' },
+    { title: 'Best', url: '/feed/best', icon: 'ribbon' },
   ];
 
   constructor(

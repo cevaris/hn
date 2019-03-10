@@ -12,13 +12,8 @@
 <ion-content>
 
   <ion-list>
-    <ion-item *ngFor="let item of items">
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>{{ item}}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>{{ item }}</ion-card-content>
-      </ion-card>
+    <ion-item *ngFor="let id of items">
+      <item [itemId]="id"></item>
     </ion-item>
   </ion-list>
 

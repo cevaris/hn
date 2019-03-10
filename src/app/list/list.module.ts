@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-
+import { IonicModule } from '@ionic/angular';
+import { ItemComponent } from '../item/item.component';
 import { ListPage } from './list.page';
+
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { ListPage } from './list.page';
       }
     ])
   ],
-  declarations: [ListPage]
+  declarations: [ListPage, ItemComponent]
 })
-export class ListPageModule {}
+export class ListPageModule { }

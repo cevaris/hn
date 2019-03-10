@@ -25,7 +25,7 @@ export interface Item {
   title: string;
   descendants: number; // total comments
   parts: number[]; // list of pollopt itemIds of a poll
-  score: number; // score o poll
+  score: number; // karma? 
   poll: number; // itemId of parent poll
 }
 

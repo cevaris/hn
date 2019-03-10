@@ -68,8 +68,19 @@ export class HnDatastore {
       .valueChanges();
   }
 
+  // async getTopStories(): Promise<number[]> {
+  //   return this.client
+  //     .list<number>('/v0/topstories')
+  //     .query
+  //     .once('value')
+  //     .then(snapshot => snapshot.val())
+  // }
+
   getTopStories(): Observable<number[]> {
     return this.http.get<number[]>(TopStoriesURL);
+    
+    // return this.client.list<number>('/v0/topstories')
+    //   .valueChanges();
   }
 
   getNewStories(): Observable<number[][]> {

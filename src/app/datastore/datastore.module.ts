@@ -13,8 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
       databaseURL: HnBaseURL
     }),
     AngularFireDatabaseModule,
-    IonicStorageModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    IonicStorageModule.forRoot()
   ],
   providers: [HnDatastore]
 })

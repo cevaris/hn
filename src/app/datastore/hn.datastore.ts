@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Storage } from '@ionic/storage';
 import { defer, Observable, of } from 'rxjs';
-import { flatMap, tap, map } from 'rxjs/operators';
+import { flatMap, tap } from 'rxjs/operators';
 
 
 export interface Updates {
@@ -39,6 +39,12 @@ export interface User {
 
 export const HnBaseURL = 'https://hacker-news.firebaseio.com';
 const TopStoriesURL = `${HnBaseURL}/v0/topstories.json`;
+const NewStoriesURL = `${HnBaseURL}/v0/newstories.json`;
+const BestStoriesURL = `${HnBaseURL}/v0/beststories.json`;
+const AskStoriesURL = `${HnBaseURL}/v0/askstories.json`;
+const ShowStoriesURL = `${HnBaseURL}/v0/showstories.json`;
+const JobStoriesURL = `${HnBaseURL}/v0/jobstories.json`;
+const buildUrl = (type: string) => `${HnBaseURL}/v0/${type}.json`;
 
 @Injectable()
 export class HnDatastore {
@@ -53,43 +59,12 @@ export class HnDatastore {
       .valueChanges();
   }
 
-  getAskStories(): Observable<number[][]> {
-    return this.client.list<number[]>('/v0/askstories')
-      .valueChanges();
+  getFeedStories(storyType: string): Observable<number[]> {
+    return this.http.get<number[]>(buildUrl(storyType));
   }
 
-  getShowStories(): Observable<number[][]> {
-    return this.client.list<number[]>('/v0/showstories')
-      .valueChanges();
-  }
-
-  getJobStories(): Observable<number[][]> {
-    return this.client.list<number[]>('/v0/jobstories')
-      .valueChanges();
-  }
-
-  // async getTopStories(): Promise<number[]> {
-  //   return this.client
-  //     .list<number>('/v0/topstories')
-  //     .query
-  //     .once('value')
-  //     .then(snapshot => snapshot.val())
-  // }
-
-  getTopStories(): Observable<number[]> {
-    return this.http.get<number[]>(TopStoriesURL);
-    
-    // return this.client.list<number>('/v0/topstories')
-    //   .valueChanges();
-  }
-
-  getNewStories(): Observable<number[][]> {
-    return this.client.list<number[]>('/v0/newstories')
-      .valueChanges();
-  }
-
-  getMaxitemId(): Observable<number[][]> {
-    return this.client.list<number[]>('/v0/maxitem')
+  getMaxitemId(): Observable<number> {
+    return this.client.object<number>('/v0/maxitem')
       .valueChanges();
   }
 

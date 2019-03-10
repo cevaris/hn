@@ -4,11 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'feed/top',
     pathMatch: 'full'
   },
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
-  { path: 'top-stories', loadChildren: './feed/feed.module#FeedPageModule' },
+  { path: 'feed/:type', loadChildren: './feed/feed.module#FeedPageModule' },
   { path: 'items/:id', loadChildren: './item-detail/item-detail.module#ItemDetailPageModule' },
 ];
 

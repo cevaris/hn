@@ -106,11 +106,12 @@ export class HnDatastore {
   // -- https://blog.fullstacktraining.com/caching-http-requests-with-angular/
   // TODO: Dabble in caching observable, and tap'ing title -> id into persistance
   getItem(id: number): Observable<Item> {
+    const key = `item:${id}`;
     const res = defer(() =>
       this.storage
         .ready()
         .then(() => {
-          return this.storage.get(`user:${id}`)
+          return this.storage.get(key)
             .then((item) => {
               console.log('found from cache', item);
               return item;
@@ -126,7 +127,7 @@ export class HnDatastore {
           return this.client.object<Item>(`/v0/item/${id}`)
             .valueChanges()
             .pipe(
-              tap(hydratedValue => this.storage.set(`user:${id}`, hydratedValue))
+              tap(hydratedValue => this.storage.set(key, hydratedValue))
             );
         }
       })

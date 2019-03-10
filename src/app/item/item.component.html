@@ -1,3 +1,5 @@
 <div *ngIf="item$ | async as item">
-  {{ item.title }}
+  <ion-item (click)="navigate();">
+    {{ item.title }}
+  </ion-item>
 </div>

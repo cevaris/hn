@@ -14,10 +14,10 @@ const getLocale = () => {
 
 @Component({
   selector: 'item-page',
-  templateUrl: 'item-detail.page.html',
-  styleUrls: ['item-detail.page.scss']
+  templateUrl: 'item.page.html',
+  styleUrls: ['item.page.scss']
 })
-export class ItemDetailPage implements OnInit {
+export class ItemPage implements OnInit {
 
   item$: Observable<Item>;
   createdAt$: Observable<string>;

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { ItemDetailPage } from './item-detail.page';
+import { ItemPage } from './item.page';
 
 
 @NgModule({
@@ -14,10 +14,10 @@ import { ItemDetailPage } from './item-detail.page';
     RouterModule.forChild([
       {
         path: '',
-        component: ItemDetailPage
+        component: ItemPage
       }
     ])
   ],
-  declarations: [ItemDetailPage]
+  declarations: [ItemPage]
 })
-export class ItemDetailPageModule { }
+export class ItemPageModule { }

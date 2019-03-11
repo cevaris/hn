@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { HnDatastore, Item } from '../datastore/hn.datastore';
-import { Globalization } from '@ionic-native/globalization/ngx';
 
 
 const getLocale = () => {
@@ -27,8 +26,7 @@ export class ItemDetailPage implements OnInit {
 
   constructor(
     private datastore: HnDatastore,
-    private activatedRoute: ActivatedRoute,
-    private globalization: Globalization
+    private activatedRoute: ActivatedRoute
   ) {
   }
 

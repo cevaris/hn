@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { HnDatastore, Item } from 'src/app/datastore/hn.datastore';
+import { HnService, Item } from 'src/app/datastore/hn.service';
 
 @Component({
   selector: 'row',
@@ -12,7 +12,7 @@ export class RowComponent implements OnInit {
   @Input() itemId: number;
   item$: Observable<Item>;
 
-  constructor(private datastore: HnDatastore, private navController: NavController) {
+  constructor(private datastore: HnService, private navController: NavController) {
   }
 
   ngOnInit() {

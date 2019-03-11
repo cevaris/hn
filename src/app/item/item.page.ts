@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { HnDatastore, Item } from '../datastore/hn.datastore';
+import { HnService, Item } from '../datastore/hn.service';
 
 
 const getLocale = () => {
@@ -25,7 +25,7 @@ export class ItemPage implements OnInit {
   title: string;
 
   constructor(
-    private datastore: HnDatastore,
+    private datastore: HnService,
     private activatedRoute: ActivatedRoute
   ) {
   }

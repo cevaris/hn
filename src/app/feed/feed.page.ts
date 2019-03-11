@@ -4,7 +4,7 @@ import { IonInfiniteScroll } from '@ionic/angular';
 import { startCase, toLower } from 'lodash';
 import { Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { HnDatastore } from '../datastore/hn.datastore';
+import { HnService } from '../datastore/hn.service';
 
 const urlToStoryType: Map<string, string> = new Map(
   [
@@ -32,7 +32,7 @@ export class FeedPage implements OnInit {
   lastPage: number;
   currPage: number = 1;
 
-  constructor(private datastore: HnDatastore, private activatedRoute: ActivatedRoute) {
+  constructor(private datastore: HnService, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {

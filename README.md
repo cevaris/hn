@@ -11,6 +11,7 @@
 - [NG Service worker](https://angularfirebase.com/lessons/hnpwa-angular-5-progressive-web-app-service-worker-tutorial/)
 - [HN Search!](https://hn.algolia.com/api)
 - [Route parameters](https://angular.io/guide/router#route-parameters)
+- [Cache strategy](https://blog.fullstacktraining.com/caching-http-requests-with-angular/)
 
 ## Similar
 - [hn PWA](https://github.com/codediodeio/hnpwa-angular5)

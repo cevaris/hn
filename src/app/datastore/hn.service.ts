@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Storage } from '@ionic/storage';
-import { defer, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { flatMap, tap } from 'rxjs/operators';
+import { CacheService } from './cache.service.';
 
 
 export interface Updates {
@@ -47,11 +48,12 @@ const JobStoriesURL = `${HnBaseURL}/v0/jobstories.json`;
 const buildUrl = (type: string) => `${HnBaseURL}/v0/${type}.json`;
 
 @Injectable()
-export class HnDatastore {
+export class HnService {
   constructor(
     private client: AngularFireDatabase,
     private storage: Storage,
-    private http: HttpClient
+    private http: HttpClient,
+    private cache: CacheService
   ) { }
 
   getUpdates(): Observable<Updates> {
@@ -73,36 +75,22 @@ export class HnDatastore {
       .valueChanges();
   }
 
-
-  // TODO: Create cache wrapper to save 
-  // -- cachedAt, value (json), and title (for searching)
   // TODO: Create class for User/Item, with cache helper key
-  // TODO: Move storage to another underlying client, just expose get/set/forEach
-  // -- https://blog.fullstacktraining.com/caching-http-requests-with-angular/
-  // TODO: Dabble in caching observable, and tap'ing title -> id into persistance
   getItem(id: number): Observable<Item> {
     const key = `item:${id}`;
-    const res = defer(() =>
-      this.storage
-        .ready()
-        .then(() => {
-          return this.storage.get(key)
-            .then((item) => {
-              console.log('found from cache', item);
-              return item;
-            });
-        }));
+
+    const res = this.cache.get(key);
 
     return res.pipe(
       flatMap(result => {
         if (result) {
           return of(result);
         } else {
-          console.log('not found from cache, hydrating', id);
+          console.log('not found from cache, hydrating', key);
           return this.client.object<Item>(`/v0/item/${id}`)
             .valueChanges()
             .pipe(
-              tap(hydratedValue => this.storage.set(key, hydratedValue))
+              tap(value => this.cache.set(key, value))
             );
         }
       })

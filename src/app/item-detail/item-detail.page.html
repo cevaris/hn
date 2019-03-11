@@ -1,3 +1,38 @@
-<div *ngIf="item$ | async as item">
-  {{ item.title }}
-</div>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    {{title}}
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="item$ | async as item">
+
+    <div>
+      By: <a href="https://news.ycombinator.com/user?id={{item.by}}">{{item.by}}</a>
+    </div>
+
+    <div>
+      Comments: {{item.descendants}}
+    </div>
+
+    <div *ngIf="createdAt$ | async as createdAt">
+      Created: {{createdAt}}
+    </div>
+
+    <div>
+      CommentIds: {{item.kids}}
+    </div>
+
+    <div>
+      Score: {{item.score}}
+    </div>
+
+    <div>
+      Text: {{item.text}}
+    </div>
+
+  </div>
+</ion-content>

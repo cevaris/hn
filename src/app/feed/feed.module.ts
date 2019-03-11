@@ -3,9 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { ItemComponent } from '../item/item.component';
 import { FeedPage } from './feed.page';
-
+import { RowComponent } from './row/row.component';
 
 @NgModule({
   imports: [
@@ -19,6 +18,6 @@ import { FeedPage } from './feed.page';
       }
     ])
   ],
-  declarations: [FeedPage, ItemComponent]
+  declarations: [FeedPage, RowComponent]
 })
 export class FeedPageModule { }

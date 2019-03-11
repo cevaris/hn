@@ -1,8 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HnDatastore, Item } from '../datastore/hn.datastore';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { HnDatastore, Item } from '../datastore/hn.datastore';
+import { Globalization } from '@ionic-native/globalization/ngx';
+
+
+const getLocale = () => {
+  if (navigator.languages != undefined)
+    return navigator.languages[0];
+  else
+    return navigator.language;
+}
 
 @Component({
   selector: 'item-page',
@@ -11,16 +20,31 @@ import { switchMap } from 'rxjs/operators';
 })
 export class ItemDetailPage implements OnInit {
 
-  @Input() itemId: number;
   item$: Observable<Item>;
+  createdAt$: Observable<string>;
 
-  constructor(private datastore: HnDatastore, private activatedRoute: ActivatedRoute) {
+  title: string;
+
+  constructor(
+    private datastore: HnDatastore,
+    private activatedRoute: ActivatedRoute,
+    private globalization: Globalization
+  ) {
   }
 
   ngOnInit() {
-    console.log('loading', this.itemId);
-    this.item$ = this.activatedRoute.paramMap.pipe(switchMap(paramMap => this.datastore.getItem(Number(paramMap.get('id')))))
-    // this.item$ = this.datastore.getItem(this.itemId);
+    this.item$ = this.activatedRoute.paramMap
+      .pipe(
+        switchMap(paramMap =>
+          this.datastore.getItem(Number(paramMap.get('id')))
+        ),
+        tap(item => this.title = item.title)
+      );
+
+    this.createdAt$ = this.item$.pipe(map(item => {
+      const date = new Date(item.time * 1000);
+      return date.toLocaleString(getLocale(), { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone })
+    }));
   }
 
 }

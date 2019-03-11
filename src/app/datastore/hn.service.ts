@@ -86,7 +86,7 @@ export class HnService {
         if (result) {
           return of(result);
         } else {
-          console.log('not found from cache, hydrating', key);
+          // console.log('not found from cache, hydrating', key);
           return this.http.get(buildItemURL(id))
             .pipe(
               tap(value => this.cache.set(key, value))

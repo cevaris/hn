@@ -7,6 +7,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DatastoreModule } from './datastore/datastore.module';
+import { ToastService } from './toast/toast.service';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { DatastoreModule } from './datastore/datastore.module';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    ToastService
   ],
   bootstrap: [AppComponent]
 })

@@ -17,6 +17,8 @@ const urlToStoryType: Map<string, string> = new Map(
   ]
 );
 
+const PageSize: number = 50;
+
 @Component({
   selector: 'feed-page',
   templateUrl: 'feed.page.html'
@@ -29,6 +31,7 @@ export class FeedPage implements OnInit {
   items: number[] = [];
 
   feed$: Observable<number[]>
+  
   lastPage: number;
   currPage: number = 1;
 
@@ -40,6 +43,7 @@ export class FeedPage implements OnInit {
       .paramMap
       .pipe(
         switchMap(paramMap => {
+          console.log('got here');
           if (paramMap && paramMap.get('type') && urlToStoryType.has(paramMap.get('type'))) {
             // titlecase
             this.title = startCase(toLower(paramMap.get('type')));
@@ -47,9 +51,9 @@ export class FeedPage implements OnInit {
             return this.datastore.getFeedStories(urlToStoryType.get(paramMap.get('type')))
           }
         }),
-        tap(itemIds => this.lastPage = Math.floor(itemIds.length / 30) + 1)
-      )
-
+        tap(itemIds => this.lastPage = Math.floor(itemIds.length / PageSize) + 1)
+      );
+      
     this.loadData(false);
   }
 
@@ -58,9 +62,9 @@ export class FeedPage implements OnInit {
 
     this.feed$
       .pipe(
-        map(feed => feed.slice((this.currPage - 1) * 30, (this.currPage - 1) * 30 + 30)),
-      ).subscribe(nextItems => {
-        nextItems.forEach((i) => this.items.push(i));
+        map(feed => feed.slice((this.currPage - 1) * PageSize, (this.currPage - 1) * PageSize + PageSize)),
+      ).subscribe(nextItemIds => {
+        nextItemIds.forEach((id) => this.items.push(id));
         this.currPage++;
         if (event) { event.target.complete() }
       });

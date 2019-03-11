@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { defer, Observable } from 'rxjs';
 
-const CACHE_TTL = 60 * 1000;
+const CACHE_TTL = 2 * 60 * 1000;
+const CACHE_DEBUG = false;
 
 export class CacheEntry {
   key: any;
@@ -30,14 +31,14 @@ export class CacheService {
         this.storage.get(key)
           .then((entry) => {
             if (isFresh(entry)) {
-              console.log('cache hit', key, entry);
+              if (CACHE_DEBUG) console.log('cache hit', key, entry);
               return entry.value;
             } else if (entry) {
-              console.log('cache stale', key);
+              if (CACHE_DEBUG) console.log('cache stale', key);
               // undefined would trigger rehydration
               return undefined;
             } else {
-              console.log('cache miss', key);
+              if (CACHE_DEBUG) console.log('cache miss', key);
               return undefined;
             }
           })

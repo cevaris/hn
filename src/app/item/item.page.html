@@ -23,15 +23,20 @@
     </div>
 
     <div>
-      CommentIds: {{item.kids}}
-    </div>
-
-    <div>
       Score: {{item.score}}
     </div>
 
     <div [innerHTML]="item.text">
     </div>
 
+    <hr />
+
+    <div>
+      <ion-list>
+        <ion-item *ngFor="let commentId of item.kids">
+          <comment [commentId]="commentId" level="0"></comment>
+        </ion-item>
+      </ion-list>
+    </div>
   </div>
 </ion-content>

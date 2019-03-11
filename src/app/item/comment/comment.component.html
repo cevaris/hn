@@ -1,0 +1,12 @@
+<div *ngIf="item$ | async as item">
+  <ion-item>
+    {{ item.by }} : {{ item.time }}
+    <div [innerHTML]="item.text"></div>
+  </ion-item>
+
+  <ion-list>
+    <ion-item *ngFor="let commentId of item.kids">
+      <comment [commentId]="commentId" level="level"></comment>
+    </ion-item>
+  </ion-list>
+</div>

@@ -1,7 +1,8 @@
 <div *ngIf="item$ | async as item">
+  <!-- {{ item | json }} -->
+
   <ion-item>
-    {{ level }} {{ item.by }} : {{ item.time }}
-    <span [innerHTML]="item.text"></span>
+    ⇒ <span [innerHTML]="item.text"></span>
   </ion-item>
 
   <ion-list>

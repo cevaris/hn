@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HnService, Item } from 'src/app/datastore/hn.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'comment',
@@ -22,7 +23,15 @@ export class CommentComponent implements OnInit {
   ngOnInit() {
     console.log('loading commentId', this.commentId);
     this.nextLevel = parseInt(this.level, 10) + 1;
-    this.item$ = this.datastore.getItem(this.commentId);
+    this.item$ = this.datastore.getItem(this.commentId).pipe(
+      filter(comment => {
+        if (comment && (comment.dead || comment.deleted)) {
+          return false;
+        } else {
+          return true;
+        }
+      })
+    );
   }
 
 }

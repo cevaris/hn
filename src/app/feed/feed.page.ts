@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { startCase, toLower } from 'lodash';
-import { Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { HnService } from '../datastore/hn.service';
+import { Subscription } from 'rxjs';
 
 const urlToStoryType: Map<string, string> = new Map(
   [
@@ -30,16 +30,20 @@ export class FeedPage implements OnInit {
   title: string;
   items: number[] = [];
 
-  feed$: Observable<number[]>
-  
-  lastPage: number;
-  currPage: number = 1;
+  private allItems: number[] = [];  // list containing all fetched itemIds
+  private subscription: Subscription;
+  private lastPage: number;
+  private currPage: number = 1;
 
   constructor(private datastore: HnService, private activatedRoute: ActivatedRoute) {
   }
 
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
+  }
+
   ngOnInit() {
-    this.feed$ = this.activatedRoute
+    this.subscription = this.activatedRoute
       .paramMap
       .pipe(
         switchMap(paramMap => {
@@ -51,23 +55,20 @@ export class FeedPage implements OnInit {
             return this.datastore.getFeedStories(urlToStoryType.get(paramMap.get('type')))
           }
         }),
-        tap(itemIds => this.lastPage = Math.floor(itemIds.length / PageSize) + 1)
-      );
-      
-    this.loadData(false);
+        tap(itemIds => this.lastPage = Math.floor(itemIds.length / PageSize) + 1),
+        tap(itemIds => this.allItems = itemIds),
+        tap(() => this.loadData(false))
+      )
+      .subscribe();
   }
 
   loadData(event) {
     console.log('loading page ', this.currPage, ' of ', this.lastPage);
 
-    this.feed$
-      .pipe(
-        map(feed => feed.slice((this.currPage - 1) * PageSize, (this.currPage - 1) * PageSize + PageSize)),
-      ).subscribe(nextItemIds => {
-        nextItemIds.forEach((id) => this.items.push(id));
-        this.currPage++;
-        if (event) { event.target.complete() }
-      });
+    const nextIds = this.allItems.slice((this.currPage - 1) * PageSize, (this.currPage - 1) * PageSize + PageSize);
+    nextIds.forEach((id) => this.items.push(id));
+    this.currPage++;
+    if (event) { event.target.complete() }
 
     if (event && this.currPage >= this.lastPage) {
       event.target.disabled = true;

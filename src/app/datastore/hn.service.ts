@@ -45,6 +45,8 @@ const BestStoriesURL = `${HnBaseURL}/v0/beststories.json`;
 const AskStoriesURL = `${HnBaseURL}/v0/askstories.json`;
 const ShowStoriesURL = `${HnBaseURL}/v0/showstories.json`;
 const JobStoriesURL = `${HnBaseURL}/v0/jobstories.json`;
+
+const buildItemURL = (id: number) => `${HnBaseURL}/v0/item/${id}.json`;
 const buildUrl = (type: string) => `${HnBaseURL}/v0/${type}.json`;
 
 @Injectable()
@@ -79,16 +81,13 @@ export class HnService {
   getItem(id: number): Observable<Item> {
     const key = `item:${id}`;
 
-    const res = this.cache.get(key);
-
-    return res.pipe(
+    return this.cache.get(key).pipe(
       flatMap(result => {
         if (result) {
           return of(result);
         } else {
           console.log('not found from cache, hydrating', key);
-          return this.client.object<Item>(`/v0/item/${id}`)
-            .valueChanges()
+          return this.http.get(buildItemURL(id))
             .pipe(
               tap(value => this.cache.set(key, value))
             );

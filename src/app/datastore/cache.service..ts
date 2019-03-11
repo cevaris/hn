@@ -2,10 +2,20 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { defer, Observable } from 'rxjs';
 
+const CACHE_TTL = 60 * 1000;
+
 export class CacheEntry {
   key: any;
   value: any;
   createdAt: number; // epoch milliseconds
+}
+
+const isFresh = (entry: CacheEntry): boolean => {
+  if (entry && entry.createdAt) {
+    return (new Date().getTime() - entry.createdAt) < CACHE_TTL
+  } else {
+    return false;
+  }
 }
 
 @Injectable()
@@ -19,12 +29,16 @@ export class CacheService {
       this.ready(() =>
         this.storage.get(key)
           .then((entry) => {
-            if (entry) {
+            if (isFresh(entry)) {
               console.log('cache hit', key, entry);
               return entry.value;
+            } else if (entry) {
+              console.log('cache stale', key);
+              // undefined would trigger rehydration
+              return undefined;
             } else {
               console.log('cache miss', key);
-              return entry;
+              return undefined;
             }
           })
       )

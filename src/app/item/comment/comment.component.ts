@@ -9,8 +9,11 @@ import { HnService, Item } from 'src/app/datastore/hn.service';
 export class CommentComponent implements OnInit {
 
   // tree depth of comment from root
-  @Input() level: number; 
+  @Input() level: string;
   @Input() commentId: number;
+
+  nextLevel: number;
+
   item$: Observable<Item>;
 
   constructor(private datastore: HnService) {
@@ -18,6 +21,7 @@ export class CommentComponent implements OnInit {
 
   ngOnInit() {
     console.log('loading commentId', this.commentId);
+    this.nextLevel = parseInt(this.level, 10) + 1;
     this.item$ = this.datastore.getItem(this.commentId);
   }
 

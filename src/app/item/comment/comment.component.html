@@ -1,15 +1,12 @@
 <div *ngIf="item$ | async as item">
   <!-- {{ item | json }} -->
 
-  <div>
-    {{item.text}}
+  <div [innerHTML]="item.text | safeHtml"></div>
+  <div class="comment">
+    <ul>
+      <li *ngFor="let commentId of item.kids">
+        <comment [commentId]="commentId" [level]="nextLevel"></comment>
+      </li>
+    </ul>
   </div>
-
-  <!-- <div [innerHTML]="item.text | safeHtml"></div> -->
-
-  <ion-list>
-    <ion-item lines="none" *ngFor="let commentId of item.kids" item-content>
-      <comment [commentId]="commentId" [level]="nextLevel"></comment>
-    </ion-item>
-  </ion-list>
 </div>

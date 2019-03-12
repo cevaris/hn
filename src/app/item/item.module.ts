@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { SafeHtmlPipe } from '../html/safe-html.pipe';
 import { CommentComponent } from './comment/comment.component';
 import { ItemPage } from './item.page';
 
@@ -19,6 +20,6 @@ import { ItemPage } from './item.page';
       }
     ])
   ],
-  declarations: [ItemPage, CommentComponent]
+  declarations: [ItemPage, CommentComponent, SafeHtmlPipe]
 })
 export class ItemPageModule { }

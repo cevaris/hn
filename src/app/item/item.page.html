@@ -3,11 +3,11 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    {{title}}
+    <div class="selctable">{{title}}</div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content overflow-scroll="true">
+<ion-content overflow-scroll="true" class="selectable">
   <div *ngIf="item$ | async as item">
 
     <div>

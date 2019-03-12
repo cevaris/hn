@@ -26,14 +26,14 @@
       Score: {{item.score}}
     </div>
 
-    <div [innerHTML]="item.text">
-    </div>
-
+    <span [innerHTML]="item.text" class="white-space: normal !important; width: 100%;"></span>
     <hr />
 
     <div>
+      <!-- <ion-list>
+        <ion-item *ngFor="let commentId of item.kids"> -->
       <ion-list>
-        <ion-item *ngFor="let commentId of item.kids">
+        <ion-item lines="none" *ngFor="let commentId of item.kids" class="comment">
           <comment [commentId]="commentId" level="0"></comment>
         </ion-item>
       </ion-list>

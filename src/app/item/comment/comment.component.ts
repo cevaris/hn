@@ -5,7 +5,8 @@ import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'comment',
-  templateUrl: 'comment.component.html'
+  templateUrl: 'comment.component.html',
+  styleUrls: ['comment.component.scss']
 })
 export class CommentComponent implements OnInit {
 

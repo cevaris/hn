@@ -8,14 +8,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DatastoreModule } from './datastore/datastore.module';
 import { ToastService } from './toast/toast.service';
+import { IonicConfig } from '@ionic/core';
 
+const config: IonicConfig = {
+  scrollAssist: false
+}
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot(config),
     AppRoutingModule,
     DatastoreModule
   ],

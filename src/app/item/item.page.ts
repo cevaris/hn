@@ -15,7 +15,7 @@ const getLocale = () => {
 @Component({
   selector: 'item-page',
   templateUrl: 'item.page.html',
-  styleUrls: ['item.page.scss']
+  styleUrls: ['item.page.scss', './comment/comment.component.scss']
 })
 export class ItemPage implements OnInit {
 

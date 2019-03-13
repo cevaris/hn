@@ -8,7 +8,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content overflow-scroll="true" class="selectable">
+<ion-content overflow-scroll="true" class="selectable" [scrollEvents]="true" (ionScroll)="onScroll($event)">
   <div *ngIf="item$ | async as item">
 
     <div>

@@ -14,6 +14,7 @@
 - [Cache strategy](https://blog.fullstacktraining.com/caching-http-requests-with-angular/)
 - [Notifications](https://github.com/katzer/cordova-plugin-local-notifications)
 - [Ionic page/component/service generator](https://ionicframework.com/docs/cli/commands/generate)
+- [Woking scrolling position observing](https://stackoverflow.com/a/43186715/3538289)
 
 ## Similar
 - [hn PWA](https://github.com/codediodeio/hnpwa-angular5)

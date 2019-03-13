@@ -2,3 +2,7 @@
   list-style-type: none;
   padding: 2%;
 }
+
+.platform-browser ion-content {
+  overflow-y: auto !important;
+}

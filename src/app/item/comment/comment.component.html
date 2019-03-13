@@ -5,7 +5,7 @@
   <div class="comment">
     <ul>
       <li *ngFor="let commentId of item.kids">
-        <comment [commentId]="commentId" [level]="nextLevel"></comment>
+        <comment [commentId]="commentId" [level]="nextLevel" [id]="'comment-'+commentId"></comment>
       </li>
     </ul>
   </div>

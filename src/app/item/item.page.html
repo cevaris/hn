@@ -4,6 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <div class="selctable">{{title}}</div>
+    <button (click)="scrollToNextRootComment()">∨</button>
   </ion-toolbar>
 </ion-header>
 
@@ -30,8 +31,9 @@
 
     <div class="comment">
       <ul>
-        <li *ngFor="let commentId of item.kids">
-          <comment [commentId]="commentId" level="0"></comment>
+        <li *ngFor="let commentId of item.kids; index as i">
+          <comment [commentId]="commentId" level="0" [id]="'comment-'+i"></comment>
+          <ion-item-divider></ion-item-divider>
         </li>
       </ul>
     </div>

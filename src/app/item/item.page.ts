@@ -49,7 +49,6 @@ export class ItemPage implements OnInit {
     }));
   }
 
-  //TODO: Handle when comment-n does not exist
   scrollToNextRootComment() {
     let count: number = 0;
     let currEl: HTMLElement = undefined;
@@ -59,10 +58,11 @@ export class ItemPage implements OnInit {
 
       // scroll to next comment
       if (this.currCommentTop == currElTop) {
-        currEl = document.getElementById('comment-' + (count + 1));
-        currEl.scrollIntoView();
-        this.currCommentTop = getElementTop(currEl);
-        break;
+        if (currEl = document.getElementById('comment-' + (count + 1))) {
+          currEl.scrollIntoView();
+          this.currCommentTop = getElementTop(currEl);
+          break;
+        }
       }
 
       // scroll to next comment if in the middle of previous comment 

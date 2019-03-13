@@ -4,7 +4,9 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <div class="selctable">{{title}}</div>
-    <button (click)="scrollToNextRootComment()">∨</button>
+    <ion-buttons slot="end">
+      <ion-button (click)="scrollToNextRootComment()">↓</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

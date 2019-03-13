@@ -27,21 +27,14 @@ export class ItemPage implements OnInit {
   createdAt$: Observable<string>;
 
   title: string;
-
-  currScrollTop: number;
   currCommentTop: number;
-  currCommentCount: number;
 
   constructor(
     private datastore: HnService,
     private activatedRoute: ActivatedRoute
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
-    this.currCommentCount = 0;
-    this.currScrollTop = 0;
-
     this.currCommentTop = 0;
 
     this.item$ = this.activatedRoute.paramMap
@@ -56,38 +49,30 @@ export class ItemPage implements OnInit {
     }));
   }
 
+  //TODO: Handle when comment-n does not exist
   scrollToNextRootComment() {
     let count: number = 0;
     let currEl: HTMLElement = undefined;
 
     while (currEl = document.getElementById('comment-' + count)) {
-      let currElTop: number = getElementTop(currEl);
+      const currElTop: number = getElementTop(currEl);
 
+      // scroll to next comment
       if (this.currCommentTop == currElTop) {
-        console.log('equal to', currEl.id, 'at', currElTop, this.currCommentTop);
         currEl = document.getElementById('comment-' + (count + 1));
         currEl.scrollIntoView();
         this.currCommentTop = getElementTop(currEl);
-        console.log('equal to', currEl.id, 'at', currElTop, this.currCommentTop);
         break;
       }
 
+      // scroll to next comment if in the middle of previous comment 
       if (currElTop > 0) {
-        console.log('scrolledTo to', currEl.id, 'at', currElTop, this.currCommentTop);
         currEl.scrollIntoView();
         this.currCommentTop = getElementTop(currEl);
-        console.log('scrolledTo to', currEl.id, 'at', currElTop, this.currCommentTop);
         break;
       } else {
-        console.log('counting', count);
         count++;
       }
-    }
-  }
-
-  onScroll(event: CustomEvent) {
-    if (event && event.detail && event.detail.scrollTop) {
-      this.currScrollTop = event.detail.scrollTop;
     }
   }
 }

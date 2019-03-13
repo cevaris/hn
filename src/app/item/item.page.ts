@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { HnService, Item } from '../datastore/hn.service';
-import { IonContent } from '@ionic/angular';
 
 
 const getLocale = () => {
@@ -24,15 +23,13 @@ function getElementTop(el: any) {
   styleUrls: ['item.page.scss']
 })
 export class ItemPage implements OnInit {
-  @ViewChild(IonContent) content: IonContent;
-
-
   item$: Observable<Item>;
   createdAt$: Observable<string>;
 
   title: string;
 
   currScrollTop: number;
+  currCommentTop: number;
   currCommentCount: number;
 
   constructor(
@@ -44,11 +41,12 @@ export class ItemPage implements OnInit {
   ngOnInit() {
     this.currCommentCount = 0;
     this.currScrollTop = 0;
+
+    this.currCommentTop = 0;
+
     this.item$ = this.activatedRoute.paramMap
       .pipe(
-        switchMap(paramMap =>
-          this.datastore.getItem(Number(paramMap.get('id')))
-        ),
+        switchMap(paramMap => this.datastore.getItem(Number(paramMap.get('id')))),
         tap(item => this.title = item.title)
       );
 
@@ -59,31 +57,33 @@ export class ItemPage implements OnInit {
   }
 
   scrollToNextRootComment() {
-    // let count = this.currCommentCount;
-    let count = 0;
+    let count: number = 0;
     let currEl: HTMLElement = undefined;
 
     while (currEl = document.getElementById('comment-' + count)) {
-      //const currTop = this.currScrollTop;
-      const currTop = 0;
-      const currElTop = getElementTop(currEl);
-      console.log('scrolling', count, currTop, currElTop);
+      let currElTop: number = getElementTop(currEl);
 
-      if (currElTop > currTop) {
-        currEl.scrollIntoView(); 
-        console.log('scrolling to', currEl.id, 'at', currElTop);
-        // this.currCommentCount++;
+      if (this.currCommentTop == currElTop) {
+        console.log('equal to', currEl.id, 'at', currElTop, this.currCommentTop);
+        count++;
+        currEl = document.getElementById('comment-' + count);
+        currEl.scrollIntoView();
+        this.currCommentTop = getElementTop(currEl);
+        console.log('equal to', currEl.id, 'at', currElTop, this.currCommentTop);
+        break;
+      }
+
+      if (currElTop > 0) {
+        console.log('scrolledTo to', currEl.id, 'at', currElTop, this.currCommentTop);
+        currEl.scrollIntoView();
+        this.currCommentTop = getElementTop(currEl);
+        console.log('scrolledTo to', currEl.id, 'at', currElTop, this.currCommentTop);
         break;
       } else {
         console.log('counting', count);
-        //this.currCommentCount++;
         count++;
       }
     }
-  }
-
-  ionViewDidEnter(){
-    this.content.scrollToTop(0);
   }
 
   onScroll(event: CustomEvent) {

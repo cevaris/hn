@@ -65,8 +65,7 @@ export class ItemPage implements OnInit {
 
       if (this.currCommentTop == currElTop) {
         console.log('equal to', currEl.id, 'at', currElTop, this.currCommentTop);
-        count++;
-        currEl = document.getElementById('comment-' + count);
+        currEl = document.getElementById('comment-' + (count + 1));
         currEl.scrollIntoView();
         this.currCommentTop = getElementTop(currEl);
         console.log('equal to', currEl.id, 'at', currElTop, this.currCommentTop);

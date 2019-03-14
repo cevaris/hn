@@ -1,8 +1,15 @@
+// for comment list
 .comment ul {
   list-style-type: none;
   padding: 2%;
 }
 
+// 
+.item-margin {
+  margin: 2%;
+}
+
+// for scrolling
 .platform-browser ion-content {
   overflow-y: auto !important;
 }

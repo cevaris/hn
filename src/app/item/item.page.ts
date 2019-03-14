@@ -7,7 +7,7 @@ import { HnService, Item, StorageOptions } from '../datastore/hn.service';
 import { getElementTop } from '../utils/html.service';
 import { printTime } from '../utils/time.service';
 
-const PageSize: number = 10;
+const PageSize: number = 1;
 
 const NoReadStorageOptions = new StorageOptions();
 NoReadStorageOptions.readCache = false;
@@ -25,11 +25,14 @@ export class ItemPage implements OnInit {
   private subscription: Subscription;
   private lastPage: number;
   private currPage: number = 1;
+  private progress: number = 0.0;
 
   item$: Observable<Item>;
   createdAt$: Observable<string>;
 
+  // itemId that is used for manual refreshing
   itemId: number;
+  // current list scrollTop for comment navigation
   currCommentTop: number;
 
   constructor(
@@ -46,6 +49,7 @@ export class ItemPage implements OnInit {
         tap(item => this.itemId = item.id),
         tap(item => this.allChildrenIds = item.kids),
         tap(itemIds => this.lastPage = Math.floor(this.allChildrenIds.length / PageSize) + 1),
+        tap(itemIds => this.progress = this.currPage * 1.0 / this.lastPage),
         tap(() => this.loadData(false))
       );
     this.createdAt$ = this.item$.pipe(map(item => printTime(item.time)));
@@ -57,12 +61,17 @@ export class ItemPage implements OnInit {
     this.subscription.unsubscribe();
   }
 
+  /**
+   * infinite list loading
+   * @param event 
+   */
   loadData(event) {
-    console.log('loading page ', this.currPage, ' of ', this.lastPage);
+    console.log('loading page ', this.currPage, ' of ', this.lastPage, this.progress);
 
     const nextIds = this.allChildrenIds.slice((this.currPage - 1) * PageSize, (this.currPage - 1) * PageSize + PageSize);
     nextIds.forEach((id) => this.childrenIds.push(id));
     this.currPage++;
+    this.progress = this.currPage * 1.0 / this.lastPage;
     if (event) { event.target.complete() }
 
     if (event && this.currPage >= this.lastPage) {

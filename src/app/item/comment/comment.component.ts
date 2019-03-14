@@ -22,7 +22,8 @@ export class CommentComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('loading commentId', this.commentId);
+    // console.log('loading commentId', this.commentId);
+    console.log('loading commentId');
     this.nextLevel = parseInt(this.level, 10) + 1;
     this.item$ = this.datastore.getItem(this.commentId).pipe(
       filter(comment => {

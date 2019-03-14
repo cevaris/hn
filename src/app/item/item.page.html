@@ -1,6 +1,6 @@
+<ion-progress-bar value="{{progress}}"></ion-progress-bar>
 <ion-content overflow-scroll="true" class="selectable">
-  <div *ngIf="item$ | async as item">
-
+  <div *ngIf="item$ | async as item" class="item-margin">
     <div>
       <b>{{item.title}}</b>
     </div>
@@ -24,29 +24,19 @@
     <div [innerHTML]="item.text"></div>
 
     <div class="comment">
-
-      <ion-content>
-        <ion-list>
-          <div *ngFor="let commentId of childrenIds; index as i">
-            <comment [commentId]="commentId" level="0" [id]="'comment-'+i"></comment>
-          </div>
-        </ion-list>
-
-        <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-          <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
-          </ion-infinite-scroll-content>
-        </ion-infinite-scroll>
-      </ion-content>
-
-
-      <!-- <ul>
-        <li *ngFor="let commentId of item.kids; index as i">
+      <ion-list>
+        <div *ngFor="let commentId of childrenIds; index as i">
           <comment [commentId]="commentId" level="0" [id]="'comment-'+i"></comment>
-          <ion-item-divider></ion-item-divider>
-        </li>
-      </ul> -->
+        </div>
+      </ion-list>
+
     </div>
   </div>
+
+  <ion-infinite-scroll threshold="10px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
 
 <ion-footer>

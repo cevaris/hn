@@ -3,19 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { HnService, Item } from '../datastore/hn.service';
-
-
-const getLocale = () => {
-  if (navigator.languages != undefined)
-    return navigator.languages[0];
-  else
-    return navigator.language;
-}
-
-function getElementTop(el: any) {
-  const rect = el.getBoundingClientRect();
-  return rect.top + window.scrollY;
-}
+import { getElementTop } from '../utils/html.service';
+import { printTime } from '../utils/time.service';
 
 @Component({
   selector: 'item-page',
@@ -43,10 +32,7 @@ export class ItemPage implements OnInit {
         tap(item => this.title = item.title)
       );
 
-    this.createdAt$ = this.item$.pipe(map(item => {
-      const date = new Date(item.time * 1000);
-      return date.toLocaleString(getLocale(), { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone })
-    }));
+    this.createdAt$ = this.item$.pipe(map(item => printTime(item.time)));
   }
 
   scrollToNextRootComment() {

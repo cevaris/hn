@@ -1,5 +1,10 @@
-<div *ngIf="item$ | async as item">
-  <ion-item (click)="navigate();">
-    {{ item.title }}
-  </ion-item>
-</div>
+<ion-item detail (click)="navigate();">
+  <div *ngIf="item$ | async as item">
+    <ion-row>
+      {{ item.title }}
+    </ion-row>
+    <ion-row>
+      {{ item.descendants }} | {{ item.score }} | {{ item.time }}
+    </ion-row>
+  </div>
+</ion-item>

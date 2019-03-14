@@ -16,7 +16,6 @@ export class RowComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log('loading itemid', this.itemId);
     this.item$ = this.datastore.getItem(this.itemId);
   }
 

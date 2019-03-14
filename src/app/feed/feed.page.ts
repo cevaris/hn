@@ -21,7 +21,8 @@ const PageSize: number = 50;
 
 @Component({
   selector: 'feed-page',
-  templateUrl: 'feed.page.html'
+  templateUrl: 'feed.page.html',
+  styleUrls: ['feed.page.scss']
 })
 export class FeedPage implements OnInit {
 

@@ -24,12 +24,27 @@
     <div [innerHTML]="item.text"></div>
 
     <div class="comment">
-      <ul>
+
+      <ion-content>
+        <ion-list>
+          <div *ngFor="let commentId of childrenIds; index as i">
+            <comment [commentId]="commentId" level="0" [id]="'comment-'+i"></comment>
+          </div>
+        </ion-list>
+
+        <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+          <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </ion-content>
+
+
+      <!-- <ul>
         <li *ngFor="let commentId of item.kids; index as i">
           <comment [commentId]="commentId" level="0" [id]="'comment-'+i"></comment>
           <ion-item-divider></ion-item-divider>
         </li>
-      </ul>
+      </ul> -->
     </div>
   </div>
 </ion-content>
@@ -44,7 +59,9 @@
       </ion-col>
       <ion-col>
         <ion-buttons>
-          <ion-button (click)="refreshItem()"><ion-icon name="refresh"></ion-icon></ion-button>
+          <ion-button (click)="refreshItem()">
+            <ion-icon name="refresh"></ion-icon>
+          </ion-button>
         </ion-buttons>
       </ion-col>
       <ion-col>

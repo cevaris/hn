@@ -1,10 +1,14 @@
 <ion-item detail (click)="navigate();">
-  <div *ngIf="item$ | async as item">
+  <div *ngIf="item$ | async as item" style="width:100%; margin-top: 5px;">
     <ion-row>
       {{ item.title }}
     </ion-row>
-    <ion-row>
-      {{ item.descendants }} | {{ item.score }} | {{ item.time }}
+    <ion-row class="feed-banner">
+      <ion-col size="5">
+        comments: {{ item.descendants }}
+      </ion-col>
+      <ion-col size="4">karma: {{ item.score }}</ion-col>
+      <ion-col size="3">{{ item.time }}</ion-col>
     </ion-row>
   </div>
 </ion-item>

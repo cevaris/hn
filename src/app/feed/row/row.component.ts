@@ -5,7 +5,8 @@ import { HnService, Item } from 'src/app/datastore/hn.service';
 
 @Component({
   selector: 'row',
-  templateUrl: 'row.component.html'
+  templateUrl: 'row.component.html',
+  styleUrls: ['row.component.scss']
 })
 export class RowComponent implements OnInit {
 

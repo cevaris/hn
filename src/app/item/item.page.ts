@@ -2,9 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { HnService, Item } from '../datastore/hn.service';
+import { HnService, Item, StorageOptions } from '../datastore/hn.service';
 import { getElementTop } from '../utils/html.service';
 import { printTime } from '../utils/time.service';
+
+
+const NoReadStorageOptions = new StorageOptions();
+NoReadStorageOptions.readCache = false;
 
 @Component({
   selector: 'item-page',
@@ -15,7 +19,7 @@ export class ItemPage implements OnInit {
   item$: Observable<Item>;
   createdAt$: Observable<string>;
 
-  title: string;
+  itemId: number;
   currCommentTop: number;
 
   constructor(
@@ -29,10 +33,15 @@ export class ItemPage implements OnInit {
     this.item$ = this.activatedRoute.paramMap
       .pipe(
         switchMap(paramMap => this.datastore.getItem(Number(paramMap.get('id')))),
-        tap(item => this.title = item.title)
+        tap(item => this.itemId = item.id)
       );
 
     this.createdAt$ = this.item$.pipe(map(item => printTime(item.time)));
+  }
+
+  refreshItem() {
+    console.log('refreshing item', this.itemId);
+    this.datastore.getItem(this.itemId, NoReadStorageOptions);
   }
 
   scrollToNextRootComment() {

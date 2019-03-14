@@ -1,16 +1,4 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
-      {{title}}
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-
   <ion-list>
     <div *ngFor="let id of items">
       <row [itemId]="id" class="feed-row"></row>
@@ -23,3 +11,14 @@
   </ion-infinite-scroll>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      {{title}}
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>

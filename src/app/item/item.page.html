@@ -1,17 +1,9 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <div class="selctable">{{title}}</div>
-    <ion-buttons slot="end">
-      <ion-button (click)="scrollToNextRootComment()">↓</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content overflow-scroll="true" class="selectable">
   <div *ngIf="item$ | async as item">
+
+    <div>
+      <b>{{item.title}}</b>
+    </div>
 
     <div>
       By: <a href="https://news.ycombinator.com/user?id={{item.by}}">{{item.by}}</a>
@@ -41,3 +33,25 @@
     </div>
   </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col>
+        <ion-buttons>
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col>
+        <ion-buttons>
+          <ion-button (click)="refreshItem()"><ion-icon name="refresh"></ion-icon></ion-button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col>
+        <ion-buttons>
+          <ion-button (click)="scrollToNextRootComment()">↓</ion-button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

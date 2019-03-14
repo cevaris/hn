@@ -6,6 +6,17 @@ import { Observable, of } from 'rxjs';
 import { flatMap, tap } from 'rxjs/operators';
 import { CacheService } from './cache.service.';
 
+export interface IStorageOptions {
+  readCache: boolean;
+}
+
+export class StorageOptions implements IStorageOptions {
+  constructor(
+    public readCache: boolean = true
+  ) { }
+}
+
+export const StorageOptionsDefault = new StorageOptions()
 
 export interface Updates {
   items: number[];
@@ -78,10 +89,18 @@ export class HnService {
   }
 
   // TODO: Create class for User/Item, with cache helper key
-  getItem(id: number): Observable<Item> {
+  getItem(id: number, opts: IStorageOptions = StorageOptionsDefault): Observable<Item> {
     const key = `item:${id}`;
 
-    return this.cache.get(key).pipe(
+    // bypass cache lookup if readCache is disabled
+    let cacheResult = of(undefined);
+    if (opts.readCache) {
+      cacheResult = this.cache.get(key);
+    } else {
+      console.log('bypassing cache for', id);
+    }
+
+    return cacheResult.pipe(
       flatMap(result => {
         if (result) {
           return of(result);

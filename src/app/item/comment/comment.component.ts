@@ -17,7 +17,6 @@ export class CommentComponent implements OnInit {
   nextLevel: number;
 
   item$: Observable<Item>;
-  hidden: boolean = true;
 
   constructor(private datastore: HnService) {
   }

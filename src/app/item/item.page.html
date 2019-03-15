@@ -25,8 +25,16 @@
 
     <div class="comment-root">
       <ul>
-        <li *ngFor="let commentId of item.kids; index as i">
-          <comment [commentId]="commentId" level="0" [id]="'comment-'+i"></comment>
+        <li *ngFor="let commentId of item.kids; index as i" (click)="toggleCollapse(i)" [id]="'comment-'+i">
+
+          <div [id]="'collapsed-comment-'+i" class="collapsed">
+            ...
+          </div>
+
+          <div [id]="'uncollapsed-comment-'+i">
+            <comment [commentId]="commentId" level="0"></comment>
+          </div>
+
           <ion-item-divider></ion-item-divider>
         </li>
       </ul>
@@ -44,7 +52,9 @@
       </ion-col>
       <ion-col>
         <ion-buttons>
-          <ion-button (click)="refreshItem()"><ion-icon name="refresh"></ion-icon></ion-button>
+          <ion-button (click)="refreshItem()">
+            <ion-icon name="refresh"></ion-icon>
+          </ion-button>
         </ion-buttons>
       </ion-col>
       <ion-col>

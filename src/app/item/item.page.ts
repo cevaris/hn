@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
@@ -24,7 +24,8 @@ export class ItemPage implements OnInit {
 
   constructor(
     private datastore: HnService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private renderer: Renderer2
   ) { }
 
   ngOnInit() {
@@ -37,6 +38,16 @@ export class ItemPage implements OnInit {
       );
 
     this.createdAt$ = this.item$.pipe(map(item => printTime(item.time)));
+  }
+
+
+  toggleCollapse(commentIndex) {
+    console.log('collapsing comment', commentIndex);
+    const collapsedDiv = document.getElementById('collapsed-comment-' + commentIndex);
+    const uncollapsedDiv = document.getElementById('uncollapsed-comment-' + commentIndex);
+
+    this.toggleClass(collapsedDiv, 'collapsed');
+    this.toggleClass(uncollapsedDiv, 'collapsed');
   }
 
   refreshItem() {
@@ -68,6 +79,16 @@ export class ItemPage implements OnInit {
       } else {
         count++;
       }
+    }
+  }
+
+  toggleClass(element: HTMLElement, clazz: string) {
+    const hasClass = element.classList.contains(clazz);
+  
+    if(hasClass) {
+      this.renderer.removeClass(element, clazz);
+    } else {
+      this.renderer.addClass(element, clazz);
     }
   }
 }

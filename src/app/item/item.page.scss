@@ -1,6 +1,18 @@
+.padded {
+  padding: 1%;
+}
+
+.comment-root ul {
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 0em;
+}
+
+
 .comment ul {
   list-style-type: none;
-  padding: 2%;
+  margin-left: 0;
+  padding-left: 1.5em;
 }
 
 .platform-browser ion-content {

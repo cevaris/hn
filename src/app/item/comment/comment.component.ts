@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HnService, Item } from 'src/app/datastore/hn.service';
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'comment',
@@ -17,6 +17,7 @@ export class CommentComponent implements OnInit {
   nextLevel: number;
 
   item$: Observable<Item>;
+  hidden: boolean = true;
 
   constructor(private datastore: HnService) {
   }
@@ -26,7 +27,7 @@ export class CommentComponent implements OnInit {
     this.nextLevel = parseInt(this.level, 10) + 1;
     this.item$ = this.datastore.getItem(this.commentId).pipe(
       filter(comment => {
-        if (comment && (comment.dead || comment.deleted)) {
+        if (!comment || comment.dead || comment.deleted) {
           return false;
         } else {
           return true;

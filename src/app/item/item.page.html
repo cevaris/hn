@@ -1,5 +1,5 @@
 <ion-content overflow-scroll="true" class="selectable">
-  <div *ngIf="item$ | async as item">
+  <div *ngIf="item$ | async as item" class="padded">
 
     <div>
       <b>{{item.title}}</b>
@@ -23,7 +23,7 @@
 
     <div [innerHTML]="item.text"></div>
 
-    <div class="comment">
+    <div class="comment-root">
       <ul>
         <li *ngFor="let commentId of item.kids; index as i">
           <comment [commentId]="commentId" level="0" [id]="'comment-'+i"></comment>

@@ -2,11 +2,14 @@
   <!-- {{ item | json }} -->
 
   <b>{{item.by}}</b>&nbsp;<span [innerHTML]="item.text | safeHtml"></span>
-  <div class="comment">
-    <ul>
-      <li *ngFor="let commentId of item.kids">
-        <comment [commentId]="commentId" [level]="nextLevel" [id]="'comment-'+commentId"></comment>
-      </li>
-    </ul>
+
+  <div *ngIf="item.kids && item.kids.length">
+    <div class="comment">
+      <ul>
+        <li *ngFor="let commentId of item.kids">
+          <comment [commentId]="commentId" [level]="nextLevel" [id]="'comment-'+commentId"></comment>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>

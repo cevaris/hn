@@ -42,12 +42,12 @@ export class ItemPage implements OnInit {
 
 
   toggleCollapse(commentIndex) {
-    console.log('collapsing comment', commentIndex);
-    const collapsedDiv = document.getElementById('collapsed-comment-' + commentIndex);
-    const uncollapsedDiv = document.getElementById('uncollapsed-comment-' + commentIndex);
+    console.log('collapsing comment disabled', commentIndex);
+    // const collapsedDiv = document.getElementById('collapsed-comment-' + commentIndex);
+    // const uncollapsedDiv = document.getElementById('uncollapsed-comment-' + commentIndex);
 
-    this.toggleClass(collapsedDiv, 'collapsed');
-    this.toggleClass(uncollapsedDiv, 'collapsed');
+    // this.toggleClass(collapsedDiv, 'collapsed');
+    // this.toggleClass(uncollapsedDiv, 'collapsed');
   }
 
   refreshItem() {
@@ -55,11 +55,22 @@ export class ItemPage implements OnInit {
     this.datastore.getItem(this.itemId, NoReadStorageOptions);
   }
 
+  navigateToLink() {
+    this.item$
+      .forEach(item => {
+        if (item.url) {
+          window.open(item.url, '_self');
+        }
+      });
+  }
+
   scrollToNextRootComment() {
     let count: number = 0;
     let currEl: HTMLElement = undefined;
 
     while (currEl = document.getElementById('comment-' + count)) {
+      if (!currEl) break;
+
       const currElTop: number = getElementTop(currEl);
 
       // scroll to next comment
@@ -84,8 +95,8 @@ export class ItemPage implements OnInit {
 
   toggleClass(element: HTMLElement, clazz: string) {
     const hasClass = element.classList.contains(clazz);
-  
-    if(hasClass) {
+
+    if (hasClass) {
       this.renderer.removeClass(element, clazz);
     } else {
       this.renderer.addClass(element, clazz);

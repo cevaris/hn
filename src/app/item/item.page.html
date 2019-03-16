@@ -40,9 +40,10 @@
       </ul>
     </div>
   </div>
+  <ng-template #loading>Loading User Data...</ng-template>
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="item$ | async as item">
   <ion-toolbar>
     <ion-row>
       <ion-col>
@@ -50,6 +51,7 @@
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
       </ion-col>
+
       <ion-col>
         <ion-buttons>
           <ion-button (click)="refreshItem()">
@@ -57,11 +59,21 @@
           </ion-button>
         </ion-buttons>
       </ion-col>
+
       <ion-col>
         <ion-buttons>
           <ion-button (click)="scrollToNextRootComment()">↓</ion-button>
         </ion-buttons>
       </ion-col>
+
+      <ion-col *ngIf="item.url">
+        <ion-buttons>
+          <ion-button (click)="navigateToLink()">
+            <ion-icon name="link"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-col>
+
     </ion-row>
   </ion-toolbar>
 </ion-footer>

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ThemeDefault, ThemeService } from '../theme.service';
 
 const themes = {
-  'dark': {
+  dark: {
     primary: '#8CBA80',
     secondary: '#FCFF6C',
     tertiary: '#FE5F55',
@@ -10,7 +10,7 @@ const themes = {
     dark: '#F7F7FF',
     light: '#495867'
   },
-  'light': ThemeDefault
+  light: ThemeDefault
 };
 
 @Component({

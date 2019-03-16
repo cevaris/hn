@@ -59,7 +59,7 @@ export class ItemPage implements OnInit {
     this.item$
       .forEach(item => {
         if (item.url) {
-          window.open(item.url, '_self');
+          window.open(item.url, '_system');
         }
       });
   }

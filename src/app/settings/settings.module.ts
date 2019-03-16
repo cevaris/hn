@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { SettingsPage } from './settings.page';
 
-import { HomePage } from './home.page';
 
 @NgModule({
   imports: [
@@ -14,10 +14,10 @@ import { HomePage } from './home.page';
     RouterModule.forChild([
       {
         path: '',
-        component: HomePage
+        component: SettingsPage
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [SettingsPage]
 })
-export class HomePageModule { }
+export class SettingsPageModule { }

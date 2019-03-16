@@ -15,6 +15,7 @@ export class AppComponent {
     { title: 'Show', url: '/feed/show', icon: 'list' },
     { title: 'Jobs', url: '/feed/job', icon: 'briefcase' },
     { title: 'Best', url: '/feed/best', icon: 'ribbon' },
+    { title: 'Settings', url: '/settings', icon: 'settings', divide: true },
   ];
 
   constructor(

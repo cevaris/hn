@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SettingsPage } from './settings.page';
+import { HnSettingsService } from '../datastore/settings.service';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { SettingsPage } from './settings.page';
       }
     ])
   ],
-  declarations: [SettingsPage]
+  declarations: [SettingsPage], 
+  providers: [HnSettingsService]
 })
 export class SettingsPageModule { }

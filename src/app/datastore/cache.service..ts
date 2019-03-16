@@ -22,7 +22,7 @@ const isFresh = (entry: CacheEntry): boolean => {
 @Injectable()
 export class CacheService {
   constructor(
-    private storage: Storage,
+    private storage: Storage
   ) { }
 
   get(key: any): Observable<any> {

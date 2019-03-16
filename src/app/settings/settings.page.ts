@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { HnSettings, HnSettingsService } from '../datastore/settings.service';
 import { ThemeDefault, ThemeService } from '../theme.service';
+import { ToastService } from '../toast/toast.service';
 
 const themes = {
   dark: {
@@ -20,18 +24,35 @@ const themes = {
 })
 export class SettingsPage {
 
-  currTheme: string;
+  settings$: Observable<HnSettings>
 
   constructor(
-    private theme: ThemeService
+    private themeService: ThemeService,
+    private settingsService: HnSettingsService,
+    private toaster: ToastService
   ) {
-
-    if (!this.currTheme) this.currTheme = 'light';
-
   }
 
+  ngOnInit() {
+    this.settings$ = this.settingsService.get();
+  }
+  
   onThemeChange(event) {
-    console.log(event.target.value);
-    this.theme.setTheme(themes[event.target.value]);
+    this.settings$.pipe(
+      map(settings => {
+        settings.theme = event.target.value;
+        return settings;
+      }),
+      tap(settings => this.settingsService.set(settings)),
+      tap(settings => this.themeService.setTheme(themes[settings.theme]))
+    ).subscribe(() => this.presentSaveToast())
+  }
+
+  presentSaveToast() {
+    this.toaster.present({
+      message: 'Saved',
+      duration: 1000,
+      showCloseButton: true
+    })
   }
 }

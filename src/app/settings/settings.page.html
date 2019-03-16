@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content *ngIf="settings$ | async as settings">
   <ion-list>
     <ion-list-header>
       <h1>Settings</h1>
@@ -6,7 +6,7 @@
 
     <ion-item>
       <ion-label>Theme</ion-label>
-      <ion-select [value]="currTheme" interface="popover" (ionChange)="onThemeChange($event)">
+      <ion-select [value]="settings.theme" interface="popover" (ionChange)="onThemeChange($event)">
         <ion-select-option value="light">Light</ion-select-option>
         <ion-select-option value="dark">Dark</ion-select-option>
         <ion-select-option value="sepia">Sepia</ion-select-option>

@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { Storage } from '@ionic/storage';
 import { Observable, of } from 'rxjs';
 import { flatMap, tap } from 'rxjs/operators';
 import { CacheService } from './cache.service.';
@@ -64,7 +63,6 @@ const buildUrl = (type: string) => `${HnBaseURL}/v0/${type}.json`;
 export class HnService {
   constructor(
     private client: AngularFireDatabase,
-    private storage: Storage,
     private http: HttpClient,
     private cache: CacheService
   ) { }

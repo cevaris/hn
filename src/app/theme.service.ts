@@ -1,56 +1,57 @@
-import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
 import * as Color from 'color';
-import { Storage } from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
-  constructor(
-    @Inject(DOCUMENT) private document: Document,
-    private storage: Storage
-  ) {
-    storage.get('theme').then(cssText => {
-      this.setGlobalCSS(cssText);
-    });
-  }
+  constructor(@Inject(DOCUMENT) private document: Document) { }
 
   // Override all global variables with a new theme
-  setTheme(theme) {
-    const cssText = CSSTextGenerator(theme);
-    this.setGlobalCSS(cssText);
-    this.storage.set('theme', cssText);
-  }
-
-  // Define a single CSS variable
-  setVariable(name, value) {
-    this.document.documentElement.style.setProperty(name, value);
-  }
-
-  private setGlobalCSS(css: string) {
-    this.document.documentElement.style.cssText = css;
-  }
-
-  get storedTheme() {
-    return this.storage.get('theme');
+  setTheme(theme: Themes) {
+    // console.log('setting theme', theme);
+    const cssText = CSSTextGenerator(themes[theme]);
+    this.document.documentElement.style.cssText = cssText;
   }
 }
 
-export const ThemeDefault = {
-  primary: '#3880ff',
-  secondary: '#0cd1e8',
-  tertiary: '#7044ff',
-  success: '#10dc60',
-  warning: '#ffce00',
-  danger: '#f04141',
-  dark: '#222428',
-  medium: '#989aa2',
-  light: '#f4f5f8'
+export type Themes = "light" | "dark | sepia | solarized";
+
+const defaultTheme = {
+  primary: '#c7c7c7',
+  secondary: '#ffffff',
+  tertiary: '#c7c7c7',
+  success: '#ffffff',
+  warning: '#ffffff',
+  danger: '#ffffff',
+  dark: '#c7c7c7',
+  medium: '#ffffff',
+  light: '#494949'
+};
+
+const themes = {
+  dark: {
+    primary: '#a9a9a9',
+    secondary: '#ebebeb',
+    tertiary: '#c0c0c0',
+    dark: '#000000',
+    medium: '#616161',
+    light: '#d6d6d6'
+  },
+  light: defaultTheme,
+  sepia: {
+    primary: '#8d6e63',
+    secondary: '#ebebeb',
+    tertiary: '#8d6e63',
+    dark: '#000000',
+    medium: '#efebe9',
+    light: '#725b53'
+  }
 };
 
 function CSSTextGenerator(colors) {
-  colors = { ...ThemeDefault, ...colors };
+  colors = { ...defaultTheme, ...colors };
 
   const {
     primary,
@@ -68,13 +69,13 @@ function CSSTextGenerator(colors) {
   const tintRatio = 0.1;
 
   return `
-    --ion-color-base: ${light};
+    --ion-color-base: ${medium};
     --ion-color-contrast: ${dark};
-    --ion-background-color: ${light};
-    --ion-text-color: ${dark};
-    --ion-toolbar-background-color: ${contrast(light, 0.1)};
-    --ion-toolbar-text-color: ${contrast(dark, 0.1)};
-    --ion-item-background-color: ${contrast(light, 0.3)};
+    --ion-background-color: ${medium};
+    --ion-text-color: ${light};
+    --ion-toolbar-background-color: ${contrast(medium, 0.1)};
+    --ion-toolbar-text-color: ${contrast(light, 0.1)};
+    --ion-item-background-color: ${contrast(medium, 0.3)};
     --ion-item-text-color: ${contrast(dark, 0.3)};
 
     --ion-color-primary: ${primary};

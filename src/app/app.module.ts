@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { DatastoreModule } from './datastore/datastore.module';
 import { ToastService } from './toast/toast.service';
 import { IonicConfig } from '@ionic/core';
+import { HnSettingsService } from './datastore/settings.service';
 
 const config: IonicConfig = {
   scrollAssist: false
@@ -27,7 +28,8 @@ const config: IonicConfig = {
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    ToastService
+    ToastService,
+    HnSettingsService
   ],
   bootstrap: [AppComponent]
 })

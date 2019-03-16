@@ -19,7 +19,6 @@ import { HnSettingsService } from '../datastore/settings.service';
       }
     ])
   ],
-  declarations: [SettingsPage], 
-  providers: [HnSettingsService]
+  declarations: [SettingsPage]
 })
 export class SettingsPageModule { }

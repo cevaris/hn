@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Platform } from '@ionic/angular';
+import { ThemeService } from './theme.service';
+import { HnSettings, HnSettingsService } from './datastore/settings.service';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +23,9 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private themeService: ThemeService,
+    private settingsService: HnSettingsService
   ) {
     this.initializeApp();
   }
@@ -30,6 +34,8 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.settingsService.get()
+        .forEach(settings => this.themeService.setTheme(settings.theme));
     });
   }
 }

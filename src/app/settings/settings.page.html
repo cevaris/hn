@@ -1,10 +1,12 @@
 <ion-content>
   <ion-list>
-    <ion-list-header>Settings</ion-list-header>
+    <ion-list-header>
+      <h1>Settings</h1>
+    </ion-list-header>
 
     <ion-item>
       <ion-label>Theme</ion-label>
-      <ion-select value="light" okText="Okay" cancelText="Dismiss">
+      <ion-select [value]="currTheme" interface="popover" (ionChange)="onThemeChange($event)">
         <ion-select-option value="light">Light</ion-select-option>
         <ion-select-option value="dark">Dark</ion-select-option>
         <ion-select-option value="sepia">Sepia</ion-select-option>

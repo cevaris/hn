@@ -16,7 +16,7 @@ export class ThemeService {
   }
 }
 
-export type Themes = "light" | "dark | sepia | solarized";
+export type Themes = "light" | "dark" | "sepia" | "solarized_dark" | "solarized_light";
 
 const defaultTheme = {
   primary: '#c7c7c7',
@@ -30,7 +30,11 @@ const defaultTheme = {
   light: '#494949'
 };
 
+
+
+
 const themes = {
+  light: defaultTheme,
   dark: {
     primary: '#a9a9a9',
     secondary: '#ebebeb',
@@ -39,7 +43,6 @@ const themes = {
     medium: '#616161',
     light: '#d6d6d6'
   },
-  light: defaultTheme,
   sepia: {
     primary: '#8d6e63',
     secondary: '#ebebeb',
@@ -47,7 +50,24 @@ const themes = {
     dark: '#000000',
     medium: '#efebe9',
     light: '#725b53'
-  }
+  },
+  // solarized: https://github.com/braver/Solarized
+  solarized_dark: {
+    primary: '#073642',
+    secondary: '#586e75',
+    tertiary: '#657b83',
+    dark: '#002b36',
+    medium: '#002b36',
+    light: '#839496'
+  },
+  solarized_light: {
+    primary: '#93a1a1',
+    secondary: '#eee8d5',
+    tertiary: '#fdf6e3',
+    dark: '#657b83',
+    medium: '#fdf6e3',
+    light: '#839496'
+  },
 };
 
 function CSSTextGenerator(colors) {

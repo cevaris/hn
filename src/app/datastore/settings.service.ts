@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { defer, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { Themes } from '../theme.service';
 
 export interface HnSettings {
-  theme: string
+  theme: Themes
 }
 
 const KEY = "settings"

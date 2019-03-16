@@ -43,15 +43,16 @@ const themes = {
     medium: '#616161',
     light: '#d6d6d6'
   },
+  // https://github.com/gerardbm/sublime-atomic-scheme
   sepia: {
-    primary: '#8d6e63',
+    primary: '#13AFAF',
     secondary: '#ebebeb',
     tertiary: '#8d6e63',
-    dark: '#000000',
-    medium: '#efebe9',
-    light: '#725b53'
+    dark: '#ccc4ad',
+    medium: '#EFE6C9',
+    light: '#554D37'
   },
-  // solarized: https://github.com/braver/Solarized
+  // https://github.com/braver/Solarized
   solarized_dark: {
     primary: '#073642',
     secondary: '#586e75',

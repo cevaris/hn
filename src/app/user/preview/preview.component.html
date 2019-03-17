@@ -1,0 +1,15 @@
+<ion-item>
+  <div *ngIf="item">
+    <div *ngIf="item.type == 'story'">
+      Story: {{item.title}}
+    </div>
+    <div *ngIf="item.type == 'comment'">
+      <div *ngIf="item.text" (click)="navigateToParent()">
+        <b>{{item.by}}</b>&nbsp;<span [innerHTML]="item.text | safeHtml"></span>
+      </div>
+      <div *ngIf="!item.text">
+        {{item | json}}
+      </div>
+    </div>
+  </div>
+</ion-item>

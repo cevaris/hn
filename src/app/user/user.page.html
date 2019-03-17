@@ -28,9 +28,11 @@
       </ion-segment-button>
     </ion-segment>
 
-    <ion-list>
-      <div *ngFor="let itemId of user.submitted">
-        <comment [commentId]="itemId" level="0"></comment>
+    <br/>
+
+    <ion-list *ngIf="userCommentItems$ | async as userCommentItems">
+      <div *ngFor="let item of userCommentItems">
+        <preview [item]="item"></preview>
       </div>
     </ion-list>
 

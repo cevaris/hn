@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HnService, User } from '../datastore/hn.service';
+import { HnService, User, Item } from '../datastore/hn.service';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { switchMap, tap, map } from 'rxjs/operators';
+import { Observable, forkJoin, Subscription } from 'rxjs';
+import { switchMap, tap, map, flatMap, filter } from 'rxjs/operators';
 import { printTime } from '../utils/time.service';
 
 @Component({
@@ -15,6 +15,10 @@ export class UserPage implements OnInit {
   user$: Observable<User>;
   userId$: Observable<string>;
   createdAt$: Observable<string>;
+  previewSubscription$: Subscription;
+
+  userCommentItems$: Observable<Item[]>;
+  userStoryItems$: Observable<Item[]>;
 
   constructor(
     private datastore: HnService,
@@ -31,9 +35,21 @@ export class UserPage implements OnInit {
       switchMap(userId => this.datastore.getUser(userId))
     )
 
+    this.previewSubscription$ = this.user$.pipe(
+      map(user => forkJoin(user.submitted.map(userItemId => this.datastore.getItem(userItemId)))),
+      tap(asyncItems => {
+        this.userCommentItems$ = asyncItems.pipe(map(items => items.filter(item => item.type === 'comment')))
+        this.userStoryItems$ = asyncItems.pipe(map(items => items.filter(item => item.type === 'story')))
+      })
+    ).subscribe();
+
     this.createdAt$ = this.user$.pipe(
       map(item => printTime(item.created))
     );
+  }
+
+  ionViewWillLeave() {
+    this.previewSubscription$.unsubscribe();
   }
 
   refreshUser(event) {

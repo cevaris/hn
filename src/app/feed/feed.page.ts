@@ -29,22 +29,22 @@ export class FeedPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   title: string;
-  items: number[] = [];
+  items: number[];
 
-  private allItems: number[] = [];  // list containing all fetched itemIds
+  private allItems: number[];  // list containing all fetched itemIds
   private subscription: Subscription;
   private lastPage: number;
-  private currPage: number = 1;
+  private currPage: number;
 
   constructor(private datastore: HnService, private activatedRoute: ActivatedRoute) {
   }
 
   doRefresh(event) {
     console.log('refresh', event);
-    setTimeout(() => {
-      console.log('Async operation has ended');
-      event.target.complete();
-    }, 2000);
+    this.subscription.unsubscribe();
+    this.subscription = this.createSubscription()
+      .pipe(tap(() => event.target.complete()))
+      .subscribe();
   }
 
   ionViewWillLeave() {
@@ -52,7 +52,16 @@ export class FeedPage implements OnInit {
   }
 
   ngOnInit() {
-    this.subscription = this.activatedRoute
+    this.subscription = this.createSubscription()
+      .subscribe();
+  }
+
+  createSubscription() {
+    this.currPage = 1;
+    this.allItems = [];
+    this.items = [];
+
+    return this.activatedRoute
       .paramMap
       .pipe(
         switchMap(paramMap => {
@@ -68,7 +77,6 @@ export class FeedPage implements OnInit {
         tap(itemIds => this.allItems = itemIds),
         tap(() => this.loadData(false))
       )
-      .subscribe();
   }
 
   loadData(event) {

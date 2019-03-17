@@ -20,21 +20,31 @@
     </div>
 
     <ion-segment (ionChange)="previewOnChanged($event)">
-      <ion-segment-button value="comments" checked>
+      <ion-segment-button value="comments" [checked]="previewType === 'comments'">
         <ion-label>Comments</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="submissions">
+      <ion-segment-button value="submissions" [checked]="previewType === 'submissions'">
         <ion-label>Submissions</ion-label>
       </ion-segment-button>
     </ion-segment>
 
-    <br/>
+    <br />
 
-    <ion-list *ngIf="userCommentItems$ | async as userCommentItems">
-      <div *ngFor="let item of userCommentItems">
-        <preview [item]="item"></preview>
-      </div>
-    </ion-list>
+    <div *ngIf="previewType === 'comments'">
+      <ion-list *ngIf="userCommentItems$ | async as userCommentItems">
+        <div *ngFor="let item of userCommentItems">
+          <preview [item]="item"></preview>
+        </div>
+      </ion-list>
+    </div>
+
+    <div *ngIf="previewType === 'submissions'">
+      <ion-list *ngIf="userStoryItems$ | async as userStoryItems">
+        <div *ngFor="let item of userStoryItems">
+          <preview [item]="item"></preview>
+        </div>
+      </ion-list>
+    </div>
 
   </div>
 </ion-content>

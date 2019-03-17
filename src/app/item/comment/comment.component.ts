@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { HnService, Item } from 'src/app/datastore/hn.service';
-import { filter, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'comment',
@@ -22,7 +22,7 @@ export class CommentComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('loading commentId', this.commentId);
+    // console.log('loading commentId', this.commentId);
     this.nextLevel = parseInt(this.level, 10) + 1;
     this.item$ = this.datastore.getItem(this.commentId).pipe(
       filter(comment => {

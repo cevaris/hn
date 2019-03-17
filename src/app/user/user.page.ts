@@ -17,6 +17,8 @@ export class UserPage implements OnInit {
   createdAt$: Observable<string>;
   previewSubscription$: Subscription;
 
+  previewType: string;
+
   userCommentItems$: Observable<Item[]>;
   userStoryItems$: Observable<Item[]>;
 
@@ -26,6 +28,7 @@ export class UserPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.previewType = 'comments'
     this.userId$ = this.activatedRoute.paramMap
       .pipe(
         map(paramMap => paramMap.get('id'))
@@ -62,7 +65,9 @@ export class UserPage implements OnInit {
   }
 
   previewOnChanged(event: CustomEvent) {
-    console.log('preview onChange', event);
+    if (event && event.detail && event.detail.value) {
+      this.previewType = event.detail.value;
+    }
   }
 
 }

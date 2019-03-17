@@ -19,6 +19,8 @@
       <div [innerHTML]="user.about | safeHtml"></div>
     </div>
 
+    <br />
+
     <ion-segment (ionChange)="previewOnChanged($event)">
       <ion-segment-button value="comments" [checked]="previewType === 'comments'">
         <ion-label>Comments</ion-label>
@@ -31,19 +33,27 @@
     <br />
 
     <div *ngIf="previewType === 'comments'">
-      <ion-list *ngIf="userCommentItems$ | async as userCommentItems">
-        <div *ngFor="let item of userCommentItems">
-          <preview [item]="item"></preview>
-        </div>
-      </ion-list>
+      <div *ngIf="userCommentItems$ | async as items">
+        <ion-virtual-scroll [items]="items">
+          <div *virtualItem="let item">
+            <ion-item no-margin no-padding>
+              <preview [item]="item"></preview>
+            </ion-item>
+          </div>
+        </ion-virtual-scroll>
+      </div>
     </div>
 
     <div *ngIf="previewType === 'submissions'">
-      <ion-list *ngIf="userStoryItems$ | async as userStoryItems">
-        <div *ngFor="let item of userStoryItems">
-          <preview [item]="item"></preview>
-        </div>
-      </ion-list>
+      <div *ngIf="userStoryItems$ | async as items">
+        <ion-virtual-scroll [items]="items">
+          <div *virtualItem="let item">
+            <ion-item no-margin no-padding>
+              <preview [item]="item"></preview>
+            </ion-item>
+          </div>
+        </ion-virtual-scroll>
+      </div>
     </div>
 
   </div>

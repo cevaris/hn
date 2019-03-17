@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { defer, Observable } from 'rxjs';
 
-const CACHE_TTL = 2 * 60 * 1000;
+const CACHE_TTL = 10 * 60 * 1000;
 const CACHE_DEBUG = false;
 
 export class CacheEntry {

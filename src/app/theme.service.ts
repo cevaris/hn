@@ -20,14 +20,11 @@ export type Themes = "light" | "dark" | "sepia" | "solarized_dark" | "solarized_
 
 const defaultTheme = {
   primary: '#c7c7c7',
-  secondary: '#ffffff',
-  tertiary: '#c7c7c7',
-  success: '#ffffff',
-  warning: '#ffffff',
-  danger: '#ffffff',
+  secondary: '#B9BCBF',
+  tertiary: '#DEE0E1',
   dark: '#c7c7c7',
   medium: '#ffffff',
-  light: '#494949'
+  light: '#61676C'
 };
 
 
@@ -46,8 +43,8 @@ const themes = {
   // https://github.com/gerardbm/sublime-atomic-scheme
   sepia: {
     primary: '#13AFAF',
-    secondary: '#ebebeb',
-    tertiary: '#8d6e63',
+    secondary: '#8d815c',
+    tertiary: '#D3CDBB',
     dark: '#ccc4ad',
     medium: '#EFE6C9',
     light: '#554D37'

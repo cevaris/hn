@@ -39,6 +39,14 @@ export class FeedPage implements OnInit {
   constructor(private datastore: HnService, private activatedRoute: ActivatedRoute) {
   }
 
+  doRefresh(event) {
+    console.log('refresh', event);
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
+
   ionViewWillLeave() {
     this.subscription.unsubscribe();
   }

@@ -1,6 +1,9 @@
 <div *ngIf="item">
   <div *ngIf="item.type == 'story'">
     Story: {{item.title}}
+    <span *ngIf="!item.title">
+      {{item | json}}
+    </span>
   </div>
   <div *ngIf="item.type == 'comment'">
     <div *ngIf="item.text" (click)="navigateToParent()">

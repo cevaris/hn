@@ -1,5 +1,5 @@
 <ion-content padding>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="refreshUser($event)">
     <ion-refresher-content pullingText="Pull to refresh"></ion-refresher-content>
   </ion-refresher>
 
@@ -19,6 +19,14 @@
       <div [innerHTML]="user.about | safeHtml"></div>
     </div>
 
+    <ion-segment (ionChange)="previewOnChanged($event)">
+      <ion-segment-button value="comments" checked>
+        <ion-label>Comments</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="submissions">
+        <ion-label>Submissions</ion-label>
+      </ion-segment-button>
+    </ion-segment>
 
     <ion-list>
       <div *ngFor="let itemId of user.submitted">

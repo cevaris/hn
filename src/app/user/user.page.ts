@@ -36,12 +36,16 @@ export class UserPage implements OnInit {
     );
   }
 
-  doRefresh(event) {
-    console.log(event);
+  refreshUser(event) {
+    console.log('refresh user', event);
     setTimeout(() => {
       console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
+  }
+
+  previewOnChanged(event: CustomEvent) {
+    console.log('preview onChange', event);
   }
 
 }

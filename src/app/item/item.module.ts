@@ -3,9 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { CommentComponent } from './comment/comment.component';
+import { SharedAppModule } from '../app.module';
 import { ItemPage } from './item.page';
-import { SafeHtmlPipe } from '../utils/safe-html.pipe';
 
 
 @NgModule({
@@ -18,8 +17,9 @@ import { SafeHtmlPipe } from '../utils/safe-html.pipe';
         path: '',
         component: ItemPage
       }
-    ])
+    ]),
+    SharedAppModule,
   ],
-  declarations: [ItemPage, CommentComponent, SafeHtmlPipe]
+  declarations: [ItemPage]
 })
 export class ItemPageModule { }

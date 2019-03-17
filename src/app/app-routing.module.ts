@@ -11,6 +11,8 @@ const routes: Routes = [
   { path: 'feed/:type', loadChildren: './feed/feed.module#FeedPageModule' },
   { path: 'items/:id', loadChildren: './item/item.module#ItemPageModule' },
   { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' },
+  { path: 'users/:id', loadChildren: './user/user.module#UserPageModule' },
+  { path: 'users/', loadChildren: './user/user.module#UserPageModule' },
 ];
 
 

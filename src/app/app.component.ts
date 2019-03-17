@@ -18,6 +18,7 @@ export class AppComponent {
     { title: 'Jobs', url: '/feed/job', icon: 'briefcase' },
     { title: 'Best', url: '/feed/best', icon: 'ribbon' },
     { title: 'Settings', url: '/settings', icon: 'settings', divide: true },
+    { title: 'User', url: '/users', icon: 'person' },
   ];
 
   constructor(

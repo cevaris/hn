@@ -1,0 +1,27 @@
+<ion-content padding>
+  <h1 *ngIf="userId$ | async as userId">{{userId}}</h1>
+  <div *ngIf="user$ | async as user">
+
+    <div *ngIf="createdAt$ | async as createdAt">
+      Created: {{createdAt}}
+    </div>
+
+    <div *ngIf="user.about">
+      About:
+      <div [innerHTML]="user.about | safeHtml"></div>
+    </div>
+
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col>
+        <ion-buttons>
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

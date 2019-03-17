@@ -57,6 +57,7 @@ const ShowStoriesURL = `${HnBaseURL}/v0/showstories.json`;
 const JobStoriesURL = `${HnBaseURL}/v0/jobstories.json`;
 
 const buildItemURL = (id: number) => `${HnBaseURL}/v0/item/${id}.json`;
+const buildUserURL = (id: string) => `${HnBaseURL}/v0/user/${id}.json`;
 const buildUrl = (type: string) => `${HnBaseURL}/v0/${type}.json`;
 
 @Injectable()
@@ -82,8 +83,7 @@ export class HnService {
   }
 
   getUser(id: string): Observable<User> {
-    return this.client.object<User>(`/v0/user/${id}`)
-      .valueChanges();
+    return this.http.get<User>(buildUserURL(id));
   }
 
   // TODO: Create class for User/Item, with cache helper key

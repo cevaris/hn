@@ -25,7 +25,7 @@ export class ItemPage implements OnInit {
   constructor(
     private datastore: HnService,
     private activatedRoute: ActivatedRoute,
-    private renderer: Renderer2
+    // private renderer: Renderer2
   ) { }
 
   ngOnInit() {
@@ -94,13 +94,13 @@ export class ItemPage implements OnInit {
     }
   }
 
-  toggleClass(element: HTMLElement, clazz: string) {
-    const hasClass = element.classList.contains(clazz);
+  // toggleClass(element: HTMLElement, clazz: string) {
+  //   const hasClass = element.classList.contains(clazz);
 
-    if (hasClass) {
-      this.renderer.removeClass(element, clazz);
-    } else {
-      this.renderer.addClass(element, clazz);
-    }
-  }
+  //   if (hasClass) {
+  //     this.renderer.removeClass(element, clazz);
+  //   } else {
+  //     this.renderer.addClass(element, clazz);
+  //   }
+  // }
 }

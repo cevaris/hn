@@ -33,36 +33,27 @@
     <br />
 
     <div *ngIf="previewType === 'comments'">
-      <div *ngIf="userCommentItems$ | async as items; else loading">
-        <ion-virtual-scroll [items]="items" bufferRatio="5" approxItemHeight="100px">
-          <div *virtualItem="let item">
-            <ion-item no-margin no-padding>
-              <preview [item]="item"></preview>
-            </ion-item>
-          </div>
-        </ion-virtual-scroll>
-      </div>
+      <ion-list *ngIf="userCommentItems$ | async as items; else loading">
+        <ion-item no-padding *ngFor="let item of items">
+          <preview [item]="item"></preview>
+        </ion-item>
+      </ion-list>
       <ng-template #loading>
         <ion-spinner></ion-spinner>
       </ng-template>
     </div>
 
     <div *ngIf="previewType === 'submissions'">
-      <div *ngIf="userStoryItems$ | async as items; else loading">
-        <ion-virtual-scroll [items]="items" bufferRation="5" approxItemHeight="70px">
-          <div *virtualItem="let item">
-            <ion-item no-margin no-padding>
-              <preview [item]="item"></preview>
-            </ion-item>
-          </div>
-        </ion-virtual-scroll>
-      </div>
+      <ion-list *ngIf="userStoryItems$ | async as items; else loading">
+        <ion-item no-padding *ngFor="let item of items">
+          <preview [item]="item"></preview>
+        </ion-item>
+      </ion-list>
       <ng-template #loading>
         <ion-spinner></ion-spinner>
       </ng-template>
     </div>
 
-    <br />
   </div>
 </ion-content>
 

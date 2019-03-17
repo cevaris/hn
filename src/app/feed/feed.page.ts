@@ -36,7 +36,7 @@ export class FeedPage implements OnInit {
   private lastPage: number;
   private currPage: number;
 
-  constructor(private datastore: HnService, private activatedRoute: ActivatedRoute, private navController: NavController) {
+  constructor(private datastore: HnService, private activatedRoute: ActivatedRoute) {
   }
 
   doRefresh(event) {
@@ -52,7 +52,6 @@ export class FeedPage implements OnInit {
   }
 
   ngOnInit() {
-    this.navController.navigateRoot('/feed/top');
     this.subscription = this.createSubscription()
       .subscribe();
   }

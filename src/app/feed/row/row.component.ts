@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HnService, Item } from 'src/app/datastore/hn.service';
@@ -16,7 +16,7 @@ export class RowComponent implements OnInit {
   item$: Observable<Item>;
   createdAt$: Observable<string>;
 
-  constructor(private datastore: HnService, private navController: NavController) {
+  constructor(private datastore: HnService, private router: Router) {
   }
 
   ngOnInit() {
@@ -25,7 +25,7 @@ export class RowComponent implements OnInit {
   }
 
   navigate() {
-    this.item$.subscribe(item => this.navController.navigateForward(['/items', this.itemId]))
+    this.item$.forEach(item => this.router.navigate(['/items', this.itemId]));
   }
 
 }

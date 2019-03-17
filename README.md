@@ -17,6 +17,7 @@
 - [Woking scrolling position observing](https://stackoverflow.com/a/43186715/3538289)
 - [Ionic 4 CSS Theme](https://angularfirebase.com/lessons/css-variables-in-ionic-4/)
 - [Material color generator](https://material.io/tools/color)
+- [Nested Observables](https://stackoverflow.com/questions/43140979/1n-or-n1-relations-of-two-objects-in-angular2-as-observables-from-a-http-reque)
 
 ## Similar
 - [hn PWA](https://github.com/codediodeio/hnpwa-angular5)

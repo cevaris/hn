@@ -35,6 +35,7 @@ export class UserPage implements OnInit {
       switchMap(userId => this.datastore.getUser(userId))
     )
 
+    // https://stackoverflow.com/questions/43140979/1n-or-n1-relations-of-two-objects-in-angular2-as-observables-from-a-http-reque
     this.previewSubscription$ = this.user$.pipe(
       map(user => forkJoin(user.submitted.map(userItemId => this.datastore.getItem(userItemId)))),
       tap(asyncItems => {

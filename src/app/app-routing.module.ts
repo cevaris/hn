@@ -5,7 +5,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'feed/top',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'feed/:type', loadChildren: './feed/feed.module#FeedPageModule' },

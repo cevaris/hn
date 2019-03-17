@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll, NavController } from '@ionic/angular';
 import { startCase, toLower } from 'lodash';
 import { switchMap, tap } from 'rxjs/operators';
 import { HnService } from '../datastore/hn.service';
@@ -36,7 +36,7 @@ export class FeedPage implements OnInit {
   private lastPage: number;
   private currPage: number;
 
-  constructor(private datastore: HnService, private activatedRoute: ActivatedRoute) {
+  constructor(private datastore: HnService, private activatedRoute: ActivatedRoute, private navController: NavController) {
   }
 
   doRefresh(event) {
@@ -52,6 +52,7 @@ export class FeedPage implements OnInit {
   }
 
   ngOnInit() {
+    this.navController.navigateRoot('/feed/top');
     this.subscription = this.createSubscription()
       .subscribe();
   }

@@ -1,4 +1,9 @@
 <ion-content overflow-scroll="true" class="selectable">
+
+  <ion-refresher slot="fixed" (ionRefresh)="refreshItem($event)">
+    <ion-refresher-content pullingText="Pull to refresh"></ion-refresher-content>
+  </ion-refresher>
+
   <div *ngIf="item$ | async as item" class="padded">
 
     <div>
@@ -48,14 +53,6 @@
       <ion-col>
         <ion-buttons>
           <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-      </ion-col>
-
-      <ion-col>
-        <ion-buttons>
-          <ion-button (click)="refreshItem()">
-            <ion-icon name="refresh"></ion-icon>
-          </ion-button>
         </ion-buttons>
       </ion-col>
 

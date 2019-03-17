@@ -50,9 +50,10 @@ export class ItemPage implements OnInit {
     // this.toggleClass(uncollapsedDiv, 'collapsed');
   }
 
-  refreshItem() {
+  refreshItem(event) {
     console.log('refreshing item', this.itemId);
-    this.datastore.getItem(this.itemId, NoReadStorageOptions);
+    this.item$ = this.datastore.getItem(this.itemId, NoReadStorageOptions)
+      .pipe(tap(() => event.target.complete()));
   }
 
   navigateToLink() {

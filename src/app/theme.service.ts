@@ -27,9 +27,6 @@ const defaultTheme = {
   light: '#61676C'
 };
 
-
-
-
 const themes = {
   light: defaultTheme,
   dark: {

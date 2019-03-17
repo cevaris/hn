@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SafeHtmlPipe } from '../utils/safe-html.pipe';
 import { UserPage } from './user.page';
+import { CommentComponent } from '../item/comment/comment.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [UserPage, SafeHtmlPipe]
+  declarations: [UserPage, SafeHtmlPipe, CommentComponent]
 })
 export class UserPageModule { }

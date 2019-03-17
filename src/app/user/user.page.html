@@ -1,4 +1,8 @@
 <ion-content padding>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="Pull to refresh"></ion-refresher-content>
+  </ion-refresher>
+
   <h1 *ngIf="userId$ | async as userId">{{userId}}</h1>
   <div *ngIf="user$ | async as user">
 
@@ -6,10 +10,21 @@
       Created: {{createdAt}}
     </div>
 
+    <div>
+      Karma: {{user.karma}}
+    </div>
+
     <div *ngIf="user.about">
       About:
       <div [innerHTML]="user.about | safeHtml"></div>
     </div>
+
+
+    <ion-list>
+      <div *ngFor="let itemId of user.submitted">
+        <comment [commentId]="itemId" level="0"></comment>
+      </div>
+    </ion-list>
 
   </div>
 </ion-content>

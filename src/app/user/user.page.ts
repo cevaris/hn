@@ -36,4 +36,12 @@ export class UserPage implements OnInit {
     );
   }
 
+  doRefresh(event) {
+    console.log(event);
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
+
 }
